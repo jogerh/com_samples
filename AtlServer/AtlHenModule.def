@@ -1,0 +1,6 @@
+; Tell linker to export the functions that always are part of a COM module
+EXPORTS
+DllCanUnloadNow		PRIVATE
+DllGetClassObject	PRIVATE
+DllRegisterServer	PRIVATE
+DllUnregisterServer	PRIVATE

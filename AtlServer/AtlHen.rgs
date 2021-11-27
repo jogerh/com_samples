@@ -1,0 +1,27 @@
+HKCR
+{
+	AtlHenLib.AtlHen.1 = s 'AtlHen implementation object'
+    {
+        CLSID = s '{9eedb943-b267-4f0c-b8b6-59fe3851f239}'
+    }
+    AtlHenLib.AtlHen = s 'AtlHen implementation object'
+    {
+        CLSID = s '{9eedb943-b267-4f0c-b8b6-59fe3851f239}'
+        CurVer = s 'AtlHenLib.AtlHen.1'
+    }
+
+	NoRemove CLSID
+	{
+		ForceRemove {9eedb943-b267-4f0c-b8b6-59fe3851f239} = s 'AtlHen class'
+		{
+			ProgID = s 'AtlHenLib.AtlHen.1'
+            VersionIndependentProgID = s 'AtlHenLib.AtlHen'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+		    TypeLib = s '{6ed1b1aa-807b-4a28-87b6-fcdc18ab8dc3}'
+			Version = s '1.0'
+		}
+	}
+}
