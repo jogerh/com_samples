@@ -23,11 +23,14 @@
     <None Include="AtlCluckObserver.rgs">
       <Filter>RegistryScripts</Filter>
     </None>
-    <None Include="AtlHenLib.rgs" />
     <None Include="AppId.rgs">
       <Filter>RegistryScripts</Filter>
     </None>
     <None Include="AtlHen.rgs">
+      <Filter>RegistryScripts</Filter>
+    </None>
+    <None Include="readme.md" />
+    <None Include="AtlHenLib.rgs">
       <Filter>RegistryScripts</Filter>
     </None>
   </ItemGroup>

@@ -4,7 +4,8 @@ COM Examples contains sample implementations that use Microsoft COM technology. 
 
 ## Content
 
-* *Interfaces*: COM interfaces written in interface definition language (IDL)
-* *AtlHenLib*: An ATL implementation of a COM server that provides hens
-* *Tests*: Unit tests used to demonstrate how COM objects are used
+* [Interfaces](Interfaces/): COM interfaces written in interface definition language (IDL)
+* [AtlServer](AtlServer/): An ATL implementation of a COM server that provides hens
+* [ComUtility](ComUtility/): COM related utilities used across the projects
+* [Tests](Tests/): Unit tests used to demonstrate how COM objects are used
 
