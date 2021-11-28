@@ -1,0 +1,26 @@
+import "oaidl.idl";
+import "ocidl.idl";
+import "IHen.idl";
+[
+	uuid(6ed1b1aa-807b-4a28-87b6-fcdc18ab8dc3),
+	version(1.0),
+]
+library AtlHenLib
+{
+	[
+		uuid(9eedb943-b267-4f0c-b8b6-59fe3851f239),
+	]
+	coclass AtlHen
+	{
+		[default] interface IHen;
+	};
+
+	[
+		uuid(5717f50c-8aaa-433b-9077-85edc0a5efc3),
+	]
+	coclass AtlCluckObserver
+	{
+		[default] interface IAsyncCluckObserver;
+	};
+};
+

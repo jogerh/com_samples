@@ -1,0 +1,28 @@
+HKCR
+{
+	AtlHenLib.AtlCluckObserver.1 = s 'AtlCluckObserver implementation object'
+    {
+        CLSID = s '{5717f50c-8aaa-433b-9077-85edc0a5efc3}'
+    }
+    AtlHenLib.AtlCluckObserver = s 'AtlCluckObserver implementation object'
+    {
+        CLSID = s '{5717f50c-8aaa-433b-9077-85edc0a5efc3}'
+        CurVer = s 'AtlHenLib.AtlCluckObserver.1'
+    }
+
+	NoRemove CLSID
+	{
+		ForceRemove {5717f50c-8aaa-433b-9077-85edc0a5efc3} = s 'AtlCluckObserver class'
+		{
+			ProgID = s 'AtlHenLib.AtlCluckObserver.1'
+            VersionIndependentProgID = s 'AtlHenLib.AtlCluckObserver'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+		    TypeLib = s '{6ed1b1aa-807b-4a28-87b6-fcdc18ab8dc3}'
+			Version = s '1.0'
+			val AppID = s '%APPID%'
+		}
+	}
+}

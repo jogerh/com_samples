@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="framework.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Include\ComUtility\Utility.h">
+      <Filter>Include\ComUtility</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="ComUtility.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Include">
+      <UniqueIdentifier>{9bd5fbc3-9d9b-450a-86a9-b466de32f4d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\ComUtility">
+      <UniqueIdentifier>{e33dcebc-ca3b-470e-a2b7-36361a09c47c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

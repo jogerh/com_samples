@@ -1,0 +1,24 @@
+import "oaidl.idl";
+import "ocidl.idl";
+[
+	oleautomation,
+	object,
+	uuid(b1725b85-fe39-4f35-ad5c-e598e37ef585),
+	pointer_default(unique)
+]
+interface IAsyncCluckObserver : IUnknown
+{
+	HRESULT OnCluck();
+};
+
+[
+	oleautomation,
+	object,
+	uuid(cd519596-77eb-4c6b-a2a7-e84ded0d67a8),
+	pointer_default(unique)
+]
+interface IHen : IUnknown
+{
+	HRESULT Cluck();
+	HRESULT CluckAsync(IAsyncCluckObserver* cluckObserver);
+};
