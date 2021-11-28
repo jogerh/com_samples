@@ -3,9 +3,10 @@
 // Used by AtlHen.rc
 //
 #define IDS_PROJNAME                    100
-#define IDR_ATLHENLIB             101
-#define IDR_HEN                   107
-#define IDR_ASYNCCLUCKOBSERVER              108
+#define IDR_APPID                       105
+#define IDR_ATLHENLIB                   106
+#define IDR_HEN                         107
+#define IDR_ASYNCCLUCKOBSERVER          108
 
 // Next default values for new objects
 // 

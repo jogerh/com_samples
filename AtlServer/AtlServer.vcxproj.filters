@@ -19,12 +19,17 @@
     <Midl Include="AtlHenLib.idl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AtlHen.rgs" />
     <None Include="AtlHenModule.def" />
     <None Include="AtlCluckObserver.rgs">
       <Filter>RegistryScripts</Filter>
     </None>
     <None Include="AtlHenLib.rgs" />
+    <None Include="AppId.rgs">
+      <Filter>RegistryScripts</Filter>
+    </None>
+    <None Include="AtlHen.rgs">
+      <Filter>RegistryScripts</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RegistryScripts">

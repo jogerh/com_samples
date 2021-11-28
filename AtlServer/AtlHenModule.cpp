@@ -12,7 +12,7 @@ class AtlHenModule : public ATL::CAtlDllModuleT<AtlHenModule>
 {
 public:
     DECLARE_LIBID(LIBID_AtlHenLib)
-    DECLARE_REGISTRY_APPID_RESOURCEID(IDR_ATLHENLIB, "{6ed1b1aa-807b-4a28-87b6-fcdc18ab8dc3}")
+    DECLARE_REGISTRY_APPID_RESOURCEID(IDR_APPID, "{860d9d2c-315d-4e01-93b6-ded0e8d133c3}")
 };
 
 AtlHenModule s_atlModule;

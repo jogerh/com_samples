@@ -22,6 +22,7 @@ HKCR
 			}
 		    TypeLib = s '{6ed1b1aa-807b-4a28-87b6-fcdc18ab8dc3}'
 			Version = s '1.0'
+			val AppID = s '%APPID%'
 		}
 	}
 }

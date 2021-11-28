@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <None Include="AppId.rgs" />
     <None Include="AtlCluckObserver.rgs" />
     <None Include="AtlHen.rgs" />
     <None Include="AtlHenModule.def" />
