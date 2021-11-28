@@ -24,6 +24,7 @@
     <None Include="AtlHen.rgs" />
     <None Include="AtlHenModule.def" />
     <None Include="AtlHenLib.rgs" />
+    <None Include="readme.md" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AtlHen.cpp" />
