@@ -1,0 +1,14 @@
+import "oaidl.idl";
+import "ocidl.idl";
+import "IHen.idl";
+
+[
+	uuid(8edbf75d-ecf2-4a1f-affc-07fcb8dee00a),
+	version(1.0),
+]
+library Interfaces
+{
+	interface IHen;
+	interface IAsyncCluckObserver;
+};
+

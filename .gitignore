@@ -3,3 +3,7 @@ Build/
 packages/
 
 *.user
+InteropTests/bin/
+InteropTests/obj/
+InteropTests/obj/
+InteropTests/Properties/
