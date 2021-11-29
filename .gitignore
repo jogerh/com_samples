@@ -3,3 +3,5 @@ Build/
 packages/
 
 *.user
+InteropTests/bin/
+InteropTests/obj/
