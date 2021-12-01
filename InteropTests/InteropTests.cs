@@ -1,11 +1,12 @@
 using System;
-using System.Diagnostics;
+using System.Threading;
 using NUnit.Framework;
 using Moq;
 using InterfacesInterop;
 namespace InteropTests
 {
-    public class InteropTestsWithHens
+    [TestFixture, Apartment(ApartmentState.STA)]
+    public class InteropTestsWithSingleThreadedApartment
     {
         [SetUp]
         public void Setup()
@@ -13,16 +14,27 @@ namespace InteropTests
             Type comServerType = Type.GetTypeFromProgID("AtlHenLib.AtlHen.1");
             Assert.NotNull(comServerType);
             m_hen = Activator.CreateInstance(comServerType) as IHen;
+
         }
 
         [Test]
-        public void RequireThat_CluckObserverIsCalled_WhenPassingAsMockToAtlHen()
+        public void RequireThat_CluckObserverIsCalledOnStaThread_WhenCluckAsyncIsCalledFromStaThread()
         {
+            // Arrange
             var cluckObserver = new Mock<IAsyncCluckObserver>();
 
-            m_hen.CluckAsync(cluckObserver.Object); // TODO: Verify that Cluck is called on the right thread
+            int calledOnThreadId = 0;
+            cluckObserver.Setup(mock => mock.OnCluck()).Callback(() =>
+            {
+                calledOnThreadId = Thread.CurrentThread.ManagedThreadId;
+            });
 
+            // Act
+            m_hen.CluckAsync(cluckObserver.Object);
+
+            // Assert
             cluckObserver.Verify(mock => mock.OnCluck(), Times.AtLeastOnce);
+            Assert.AreEqual(calledOnThreadId, Thread.CurrentThread.ManagedThreadId);
         }
 
         private IHen m_hen;
