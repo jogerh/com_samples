@@ -5,6 +5,7 @@
     <IsPackable>false</IsPackable>
     <Platforms>x64</Platforms>
     <GenerateProgramFile>false</GenerateProgramFile>
+    <TargetFramework>net5.0-windows</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
