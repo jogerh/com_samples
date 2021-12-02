@@ -3,6 +3,7 @@ using System.Threading;
 using NUnit.Framework;
 using Moq;
 using InterfacesInterop;
+
 namespace InteropTests
 {
     [TestFixture, Apartment(ApartmentState.STA)]
