@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Include\AtlFreeServer\GuardDog.h">
+      <Filter>Include\AtlFreeServer</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Registration.cpp" />
+    <ClCompile Include="GuardDog.cpp" />
+    <ClCompile Include="..\Build\Output\Include\Interfaces\dlldata.c">
+      <Filter>Proxy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Build\Output\Include\Interfaces\IDog_i.c">
+      <Filter>Proxy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Build\Output\Include\Interfaces\IDog_p.c">
+      <Filter>Proxy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Build\Output\Include\Interfaces\IHen_i.c">
+      <Filter>Proxy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Build\Output\Include\Interfaces\IHen_p.c">
+      <Filter>Proxy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Build\Output\Include\Interfaces\Interfaces_i.c">
+      <Filter>Proxy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Build\Output\Include\Interfaces\IPostman_i.c">
+      <Filter>Proxy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Build\Output\Include\Interfaces\IPostman_p.c">
+      <Filter>Proxy</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Exports.def" />
+    <None Include="readme.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Include">
+      <UniqueIdentifier>{a846d60d-de04-4fcb-a476-04bc7b323fba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\AtlFreeServer">
+      <UniqueIdentifier>{64fefbf8-db5f-4046-a0c8-43b7591fdc62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Proxy">
+      <UniqueIdentifier>{f4edfca2-1b99-49b9-941a-07728a3f15fa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
