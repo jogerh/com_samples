@@ -1,0 +1,15 @@
+import "oaidl.idl";
+import "ocidl.idl";
+import "IPostman.idl";
+
+[
+	oleautomation,
+	object,
+	uuid(69fd604f-493c-4344-94b8-ea4179dd5113),
+	pointer_default(unique)
+]
+interface IDog : IUnknown
+{
+	HRESULT Sit();
+	HRESULT Bite([in] IPostman* victim);
+};
