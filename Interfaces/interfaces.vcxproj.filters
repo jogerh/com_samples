@@ -3,5 +3,7 @@
   <ItemGroup>
     <Midl Include="IHen.idl" />
     <Midl Include="Interfaces.idl" />
+    <Midl Include="IDog.idl" />
+    <Midl Include="IPostman.idl" />
   </ItemGroup>
 </Project>
