@@ -18,6 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ComUtilityManaged\ComUtilityManaged.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="InterfacesInterop">
       <HintPath>..\Build\Output\InterfacesInterop.dll</HintPath>
     </Reference>
