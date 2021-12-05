@@ -9,16 +9,6 @@ namespace InteropTests
     [TestFixture, Apartment(ApartmentState.STA)]
     public class InteropTestsWithSingleThreadedApartment
     {
-        [SetUp]
-        public void Setup()
-        {
-            Type comServerType = Type.GetTypeFromProgID("AtlHenLib.AtlHen.1");
-            Assert.NotNull(comServerType);
-            m_hen = Activator.CreateInstance(comServerType) as IHen;
-            m_apartmentThreadId = Thread.CurrentThread.ManagedThreadId;
-
-        }
-
         // This test verifies that in a single threaded case, callbacks from COM are executed
         // on the caller thread. Nothing fancy going on here.
         [Test]
@@ -32,13 +22,14 @@ namespace InteropTests
                 calledOnThreadId = Thread.CurrentThread.ManagedThreadId;
             });
 
-            m_hen.CluckAsync(cluckObserver.Object);
+            var hen = CreateAtlHen();
+            hen.CluckAsync(cluckObserver.Object);
 
             cluckObserver.Verify(mock => mock.OnCluck(), Times.AtLeastOnce);
 
             // As expected, the CluckObserver OnCluck method was called on the same
             // thread as we called IHen CluckAsync on
-            Assert.AreEqual(calledOnThreadId, m_apartmentThreadId);
+            Assert.AreEqual(calledOnThreadId, Thread.CurrentThread.ManagedThreadId);
         }
 
 
@@ -61,10 +52,12 @@ namespace InteropTests
                 calledOnThreadId = Thread.CurrentThread.ManagedThreadId;
             });
 
+            var hen = CreateAtlHen();
+
             // Now, call CluckAsync from a different thread that is its own single threaded apartment
             var thread = new Thread(() =>
             {
-                m_hen.CluckAsync(cluckObserver.Object);
+                hen.CluckAsync(cluckObserver.Object);
             });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
@@ -79,10 +72,14 @@ namespace InteropTests
             // Of course, this happens because the IHen::CluckAsync is being marshaled over
             // to the single threaded apartment, and therefore OnCluck also is called on
             // the same thread.
-            Assert.AreEqual(calledOnThreadId, m_apartmentThreadId);
+            Assert.AreEqual(calledOnThreadId, Thread.CurrentThread.ManagedThreadId);
         }
 
-        private IHen m_hen;
-        private int m_apartmentThreadId;
+        static IHen CreateAtlHen()
+        {
+            Type comServerType = Type.GetTypeFromProgID("AtlHenLib.AtlHen.1");
+            Assert.NotNull(comServerType);
+            return Activator.CreateInstance(comServerType) as IHen;
+        }
     }
 }
