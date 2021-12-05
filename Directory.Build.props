@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<Project>
+  <PropertyGroup>
+    <!-- Common build settings that enables out-of-source build -->
+    <BaseIntermediateOutputPath>$(SolutionDir)\Build\Intermediate\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)\$(Configuration)\</IntermediateOutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <OutputPath>$(SolutionDir)\Build\Output\$(MSBuildProjectName)\</OutputPath>
+  </PropertyGroup>
+</Project>
