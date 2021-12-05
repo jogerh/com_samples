@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using NUnit.Framework;
 using Moq;
+using ComUtilityManaged;
 using InterfacesInterop;
 
 namespace InteropTests
@@ -179,6 +180,83 @@ namespace InteropTests
             // Here we see that even .Net Hen inherited from StandardOleMarshalObject
             // and created on test STA thread, Cluck is called on worker.
             Assert.AreEqual(calledOnThreadId, thread.ManagedThreadId);
+        }
+
+        // This test demonstrates that it is not enough to call RoGetAgileReference to get marshaling with .Net Hen.
+        [Test]
+        public void RequireThat_CluckIsCalledOnWorkerStaThread_WhenDefaultDotNetHenIsMarshaledWithAgileReferenceWrapper()
+        {
+            // Here we create "default" .Net Hen implementation.
+            var hen = new Mock<IHen>();
+            // We create AgileReferenceWrapper what uses RoGetAgileReference to get thread safe object.
+            var henAgile = new AgileReferenceWrapper<IHen>(hen.Object);
+
+            int calledOnThreadId = 0;
+            hen.Setup(mock => mock.Cluck()).Callback(() =>
+            {
+                // Store in callback thread id where Cluck is called.
+                calledOnThreadId = Thread.CurrentThread.ManagedThreadId;
+            });
+
+            // Now, call Cluck from a different thread that .Net Hen was created.
+            var thread = new Thread(() =>
+            {
+                // We call resolve on AgileReferenceWrapper to get object which calls will be marshaled
+                // to the thread AgileReference was created on.
+                var h = henAgile.Resolve();
+                // Cluck should happen on worker STA thread.
+                h.Cluck();
+            });
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+
+            // Here, note that Join is very important because it pumps messages until the thread exits.
+            thread.Join();
+
+            hen.Verify(mock => mock.Cluck(), Times.AtLeastOnce);
+
+            // Here we see that even .Net hen is marshaled with AgileReferenceWrapper Cluck is called on worker STA thread.
+            Assert.AreEqual(calledOnThreadId, thread.ManagedThreadId);
+        }
+
+        // This test is same as above, but it uses Hen inherited from StandardOleMarshalObject.
+        // It demonstrates that StandardOleMarshalObject and RoGetAgileReference are both mandatory
+        // conditions to get marshaling with .Net implementation.
+        [Test]
+        public void RequireThat_CluckIsCalledOnStaThread_WhenDotNetHenInheritedFromStandardOleMarshalObjectIsMarshaledWithAgileReferenceWrapper()
+        {
+            // Here we create .Net Hen implementation inherited from StandardOleMarshalObject.
+            var hen = new Mock<Hen>();
+            // We create AgileReferenceWrapper what uses RoGetAgileReference to get thread safe object.
+            var henAgile = new AgileReferenceWrapper<IHen>(hen.Object);
+
+            int calledOnThreadId = 0;
+            hen.Setup(mock => mock.Cluck()).Callback(() =>
+            {
+                // Store in callback thread id where Cluck is called.
+                calledOnThreadId = Thread.CurrentThread.ManagedThreadId;
+            });
+
+            // Now, call Cluck from a different thread that .Net Hen was created.
+            var thread = new Thread(() =>
+            {
+                // We call resolve on AgileReferenceWrapper to get object which calls will be marshaled
+                // to the thread AgileReference was created on.
+                var h = henAgile.Resolve();
+                // Cluck should happen on test STA thread.
+                h.Cluck();
+            });
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+
+            // Here, note that Join is very important because it pumps messages until the thread exits.
+            thread.Join();
+
+            hen.Verify(mock => mock.Cluck(), Times.AtLeastOnce);
+
+            // Here we see that .Net hen inherited from StandardOleMarshalObject and marshaled
+            // with AgileReferenceWrapper Cluck is called on test STA thread.
+            Assert.AreEqual(calledOnThreadId, Thread.CurrentThread.ManagedThreadId);
         }
 
         static IHen CreateAtlHen()
