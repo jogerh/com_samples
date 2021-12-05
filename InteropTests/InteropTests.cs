@@ -259,6 +259,113 @@ namespace InteropTests
             Assert.AreEqual(calledOnThreadId, Thread.CurrentThread.ManagedThreadId);
         }
 
+        // This test demonstrates that marshaling did not happen if both classes is implemented
+        // In .Net and inherited from StandardOleMarshalObject.
+        [Test]
+        public void RequireThat_CluckObserverAndHenAreCalledOnWorkerStaThread_WhenCluckAsyncIsCalledOnNonMarshaledHenFromWorkerThread()
+        {
+            // Here we create the cluck observer inherited from StandardOleMarshalObject on a single threaded apartment
+            var cluckObserver = new Mock<AsyncCluckObserver>();
+
+            int cluckObserverCalledOnThreadId = 0;
+            cluckObserver.Setup(mock => mock.OnCluck()).Callback(() =>
+            {
+                // Allow us to observe the thread that the observer was actually called on.
+                cluckObserverCalledOnThreadId = Thread.CurrentThread.ManagedThreadId;
+            });
+
+            var hen = new Mock<Hen>();
+            int henCalledOnThreadId = 0;
+
+            hen.Setup(mock => mock.CluckAsync(It.IsAny<IAsyncCluckObserver>()))
+                .Callback<IAsyncCluckObserver>(observer =>
+                    {
+                        // Allow us to observe the thread that the hen was actually called on.
+                        henCalledOnThreadId = Thread.CurrentThread.ManagedThreadId;
+                        observer.OnCluck();
+                    });
+
+            // Now, call CluckAsync from a different thread that is its own single threaded apartment
+            var thread = new Thread(() =>
+            {
+                // We pass AsyncCluckObserver on the worker thread, so calls to it should happen here.
+                hen.Object.CluckAsync(cluckObserver.Object);
+            });
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+
+            // Here, note that Join is very important because it pumps messages until the thread exits.
+            thread.Join();
+
+            cluckObserver.Verify(mock => mock.OnCluck(), Times.AtLeastOnce);
+
+            // Reader must pay attention on code below, we use It.Is<IAsyncCluckObserver>(observer => ReferenceEquals(observer, cluckObserver.Object))
+            // expression to show that observers references are equal, this indirectly proves that marshaling did not happen.
+            hen.Verify(mock => mock.CluckAsync(It.Is<IAsyncCluckObserver>(observer => ReferenceEquals(observer, cluckObserver.Object))), Times.AtLeastOnce);
+
+            // Marshaling did not happen above, so CluckAsync and OnCluck calls should happen on same thread,
+            // and that thread is the worker.
+            Assert.AreEqual(henCalledOnThreadId, cluckObserverCalledOnThreadId);
+            Assert.AreEqual(cluckObserverCalledOnThreadId, thread.ManagedThreadId);
+        }
+
+        // This test shows, how to get behavior RequireThat_CluckObserverIsCalledOnStaThread_WhenCluckAsyncIsCalledFromWorkerThread
+        // with both interfaces implemented in .Net using AgileReferenceWrapper.
+        [Test]
+        public void RequireThat_HenIsCalledOnTestStaThread_WhenCluckAsyncIsCalledOnMarshaledHenFromWorkerThread()
+        {
+            // Here we create the cluck observer inherited from StandardOleMarshalObject on a single threaded apartment
+            var cluckObserver = new Mock<AsyncCluckObserver>();
+
+            int cluckObserverCalledOnThreadId = 0;
+            cluckObserver.Setup(mock => mock.OnCluck()).Callback(() =>
+            {
+                // Allow us to observe the thread that the observer was actually called on.
+                cluckObserverCalledOnThreadId = Thread.CurrentThread.ManagedThreadId;
+            });
+
+            var hen = new Mock<Hen>();
+            int henCalledOnThreadId = 0;
+            hen.Setup(mock => mock.CluckAsync(It.IsAny<IAsyncCluckObserver>()))
+                .Callback<IAsyncCluckObserver>(observer =>
+                {
+                    // Allow us to observe the thread that the hen was actually called on.
+                    henCalledOnThreadId = Thread.CurrentThread.ManagedThreadId;
+                    observer.OnCluck();
+                });
+
+            // Create agile reference to hen, this should make behavior same as in:
+            // RequireThat_CluckObserverIsCalledOnStaThread_WhenCluckAsyncIsCalledFromWorkerThread
+            var henAgile = new AgileReferenceWrapper<IHen>(hen.Object);
+
+            // Now, call CluckAsync from a different thread that is its own single threaded apartment
+            var thread = new Thread(() =>
+            {
+                // Calls to resolved hen should be on test STA thread.
+                var h = henAgile.Resolve();
+
+                // We pass AsyncCluckObserver on the worker thread to resolved hen,
+                // so calls to cluckObserver should happen on this thread.
+                h.CluckAsync(cluckObserver.Object);
+            });
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+
+            // Here, note that Join is very important because it pumps messages until the thread exits.
+            thread.Join();
+
+            cluckObserver.Verify(mock => mock.OnCluck(), Times.AtLeastOnce);
+
+            // Reader must pay attention on code below, we use It.Is<IAsyncCluckObserver>(observer => !ReferenceEquals(observer, cluckObserver.Object))
+            // expression to show that observers references are NOT equal, this indirectly proves that marshaling is happened.
+            hen.Verify(mock => mock.CluckAsync(It.Is<IAsyncCluckObserver>(observer => !ReferenceEquals(observer, cluckObserver.Object))), Times.AtLeastOnce);
+
+            // Because AgileReferenceWrapper is created on test STA thread, CluckAsync call must be
+            // on test STA thread, on the other hand OnCluck should be marshaled to worker thread.
+            Assert.AreEqual(henCalledOnThreadId, Thread.CurrentThread.ManagedThreadId);
+            Assert.AreEqual(cluckObserverCalledOnThreadId, thread.ManagedThreadId);
+        }
+
         static IHen CreateAtlHen()
         {
             Type comServerType = Type.GetTypeFromProgID("AtlHenLib.AtlHen.1");
