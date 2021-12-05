@@ -6,4 +6,7 @@
     <Midl Include="IDog.idl" />
     <Midl Include="IPostman.idl" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="readme.md" />
+  </ItemGroup>
 </Project>
