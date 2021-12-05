@@ -24,6 +24,9 @@
     <Midl Include="IDog.idl" />
     <Midl Include="IPostman.idl" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="readme.md" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
