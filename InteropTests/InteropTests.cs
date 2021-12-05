@@ -116,6 +116,71 @@ namespace InteropTests
             Assert.AreEqual(calledOnThreadId, thread.ManagedThreadId);
         }
 
+        // This test demonstrates that .Net Hen implementation does not marshal calls to thread where Hen created.
+        [Test]
+        public void RequireThat_HenIsCalledOnWorkerStaThread_WhenDotNetHenIsCreatedOnTestStaThread()
+        {
+            // Here we create "default" .Net Hen implementation.
+            var hen = new Mock<IHen>();
+
+            int calledOnThreadId = 0;
+            hen.Setup(mock => mock.Cluck()).Callback(() =>
+            {
+                // Store in callback thread id where Cluck is called.
+                calledOnThreadId = Thread.CurrentThread.ManagedThreadId;
+            });
+
+            // Now, call Cluck from a different thread that .Net Hen was created.
+            var thread = new Thread(() =>
+            {
+                hen.Object.Cluck();
+            });
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+
+            // Here, note that Join is very important because it pumps messages until the thread exits.
+            thread.Join();
+
+            hen.Verify(mock => mock.Cluck(), Times.AtLeastOnce);
+
+            // Here we see that even .Net hen was created on test STA thread, Cluck call was happened on worker.
+            Assert.AreEqual(calledOnThreadId, thread.ManagedThreadId);
+        }
+
+        // This test is same as above, but it uses Hen inherited from StandardOleMarshalObject.
+        // It demonstrates that even Hen inherited from StandardOleMarshalObject calls are still
+        // happened on the worker thread.
+        [Test]
+        public void RequireThat_HenIsCalledOnWorkerStaThread_WhenDotNetHenIsStandardOleMarshalObject()
+        {
+            // Here we create Hen inherited from StandardOleMarshalObject on a single threaded apartment
+            var hen = new Mock<Hen>();
+
+            int calledOnThreadId = 0;
+            hen.Setup(mock => mock.Cluck()).Callback(() =>
+            {
+                // Store in callback thread id where call happened.
+                calledOnThreadId = Thread.CurrentThread.ManagedThreadId;
+            });
+
+            // Now, call Cluck from a different thread that .Net Hen was created
+            var thread = new Thread(() =>
+            {
+                hen.Object.Cluck();
+            });
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+
+            // Here, note that Join is very important because it pumps messages until the thread exits.
+            thread.Join();
+
+            hen.Verify(mock => mock.Cluck(), Times.AtLeastOnce);
+
+            // Here we see that even .Net Hen inherited from StandardOleMarshalObject
+            // and created on test STA thread, Cluck is called on worker.
+            Assert.AreEqual(calledOnThreadId, thread.ManagedThreadId);
+        }
+
         static IHen CreateAtlHen()
         {
             Type comServerType = Type.GetTypeFromProgID("AtlHenLib.AtlHen.1");
@@ -132,5 +197,14 @@ namespace InteropTests
     {
         /// <summary> OnCluck is abstract to enable mocking. </summary>
         public abstract void OnCluck();
+    }
+
+    public abstract class Hen : StandardOleMarshalObject, IHen
+    {
+        /// <summary> Cluck is abstract to enable mocking. </summary>
+        public abstract void Cluck();
+
+        /// <summary> CluckAsync is abstract to enable mocking. </summary>
+        public abstract void CluckAsync(IAsyncCluckObserver cluckObserver);
     }
 }
