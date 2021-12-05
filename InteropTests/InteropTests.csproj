@@ -6,9 +6,6 @@
     <Platforms>x64</Platforms>
     <GenerateProgramFile>false</GenerateProgramFile>
     <TargetFramework>net5.0-windows</TargetFramework>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <OutputPath>$(SolutionDir)\Build\Output\InteropTests\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,7 +25,7 @@
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="RegisterDependencies $(OutDir)..\" />
+    <Exec Command="RegisterDependencies $(OutputPath)..\" />
   </Target>
 
 </Project>
