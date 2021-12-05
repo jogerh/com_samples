@@ -6,6 +6,9 @@
     <Platforms>x64</Platforms>
     <GenerateProgramFile>false</GenerateProgramFile>
     <TargetFramework>net5.0-windows</TargetFramework>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <OutputPath>$(SolutionDir)\Build\Output\InteropTests\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,9 +18,6 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
     <PackageReference Include="coverlet.collector" Version="3.0.2" />
     <PackageReference Include="NUnitLite" Version="3.13.2" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ComUtilityManaged\ComUtilityManaged.csproj" />
   </ItemGroup>
 
@@ -26,5 +26,9 @@
       <HintPath>..\Build\Output\InterfacesInterop.dll</HintPath>
     </Reference>
   </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="RegisterDependencies $(OutDir)..\" />
+  </Target>
 
 </Project>
