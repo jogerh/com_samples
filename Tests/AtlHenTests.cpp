@@ -113,3 +113,55 @@ TEST(AtlHenTests, RequireThat_Cluck_IsExecutedOnMainThread_WhenCalledFromWorkerT
 
     thread.join();
 }
+
+// Test that demonstrates how we can stuck with message pump and AgilePtr
+// Disabled, just shows where we stuck.
+TEST(AtlHenTests, DISABLED_RequireThat_DeadlockIsOccurred_WhenPumpStopsBeforeReleasingComObject)
+{
+    const auto mainThreadId = GetCurrentThreadId();
+
+    auto observer = make_self<IAsyncCluckObserverMock>();
+    EXPECT_CALL(*observer, OnCluck()).WillOnce(Invoke([mainThreadId]
+        {
+            EXPECT_EQ(GetCurrentThreadId(), mainThreadId);
+            return S_OK; // Feel free to put a breakpoint here, and see which thread we are called on
+        }));
+
+    CComPtr<IHen> hen;
+    HR(CoCreateInstance(CLSID_AtlHen, nullptr, CLSCTX_INPROC_SERVER, IID_IHen, reinterpret_cast<void**>(&hen)));
+
+    // What will happen if we move agileHen to thread function?
+    auto agileHen = AgilePtr<IHen>(hen);
+    const auto agileObserver = AgilePtr<IAsyncCluckObserver>(observer);
+
+    // On the line below we move agileHen into lambda, so agileHen from above will be in
+    // the next state, AgilePtr::m_agileRef will own nullptr, because agileHen lives in lambda now.
+    std::thread thread{ [agileHen = std::move(agileHen), agileObserver, mainThreadId]
+    {
+        ComRuntime runtime{Apartment::MultiThreaded};
+
+        SetThreadDescription(GetCurrentThread(), L"Worker thread"); // Help debugging
+        HR(agileHen.Get()->CluckAsync(agileObserver.Get()));
+
+        // Notify main thread that it can now exit its message loop
+        PostThreadMessage(mainThreadId, WM_QUIT, 0, 0);
+        // What is going on after this line?
+        // It is well-known that lambda is a functional object, anonymous structure with 
+        // fields from capture list. Well, after this line destructor of captured objects
+        // called, but agileHen was moved, and we only one owner, so CComPtr<IAgileReference>::Release()
+        // Not only decrement counter, but also will destroy object. But where? On which apparent? 
+        // Exactly, on main, but it is impossible because we post exit from message loop.
+    } };
+
+    // Pump messages from COM runtime to allow function calls from worker thread to
+    // main thread to be processed. This is how COM allows communication between threads.
+    MSG message{};
+    while (const auto result = GetMessage(&message, 0, 0, 0))
+    {
+        if (-1 != result)
+            DispatchMessage(&message);
+    }
+
+    // This join locks with CComPtr<IAgileReference>::Release() what tries to destroy object on this apartment.
+    thread.join();
+}
