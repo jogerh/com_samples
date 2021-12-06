@@ -55,11 +55,10 @@ public:
         m_agileRef.Release();
     }
 
-    // Prevent moving the agile reference into another thread. This can cause memory leaks
     AgilePtr(const AgilePtr&) = default;
-    AgilePtr(AgilePtr&& in) = delete;
+    AgilePtr(AgilePtr&& in) = default;
     AgilePtr& operator=(const AgilePtr& rhs) = default;
-    AgilePtr& operator=(AgilePtr&& rhs) = delete;
+    AgilePtr& operator=(AgilePtr&& rhs) = default;
 
     CComPtr<T> Get() const
     {
