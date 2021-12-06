@@ -165,3 +165,83 @@ TEST(AtlHenTests, DISABLED_RequireThat_DeadlockIsOccurred_WhenPumpStopsBeforeRel
     // This join locks with CComPtr<IAgileReference>::Release() what tries to destroy object on this apartment.
     thread.join();
 }
+
+// Post WM_QUIT on object destruction
+struct ScopedWmQuit
+{
+    ScopedWmQuit() : m_threadId(GetCurrentThreadId()) { }
+
+    ScopedWmQuit(const ScopedWmQuit&) = delete;
+    ScopedWmQuit& operator=(const ScopedWmQuit&) = delete;
+    ScopedWmQuit(ScopedWmQuit&&) = delete;
+    ScopedWmQuit& operator=(ScopedWmQuit&&) = delete;
+
+    ~ScopedWmQuit()
+    {
+        PostThreadMessage(m_threadId, WM_QUIT, 0, 0);
+    }
+private:
+    DWORD m_threadId = 0;
+};
+
+// Ensure that WM_QUIT posted after m_callable destroyed, to avoid deadlocks (see test above)
+template <typename Callable>
+struct GuardedCallable
+{
+    explicit GuardedCallable(Callable callable) : m_callable(std::move(callable)) { }
+
+    void operator()() const
+    {
+        m_callable();
+    }
+private:
+    // Order is valuable here, ScopedWmQuit created first => destroyed last.
+    // unique_ptr used to avoid PostThreadMessage on moved ScopedWmQuit, because it is simpler
+    std::unique_ptr<ScopedWmQuit> m_wmQuit = std::make_unique<ScopedWmQuit>();
+    Callable m_callable;
+};
+
+// Test that demonstrates how to handle situations with move
+TEST(AtlHenTests, RequireThat_AgilePtrMove_DoesNotLeadToDeadlock_WhenPumpStopsAfterReleasingComObject)
+{
+    const auto mainThreadId = GetCurrentThreadId();
+
+    auto observer = make_self<IAsyncCluckObserverMock>();
+    EXPECT_CALL(*observer, OnCluck()).WillOnce(Invoke([mainThreadId]
+        {
+            EXPECT_EQ(GetCurrentThreadId(), mainThreadId);
+            return S_OK; // Feel free to put a breakpoint here, and see which thread we are called on
+        }));
+
+    CComPtr<IHen> hen;
+    HR(CoCreateInstance(CLSID_AtlHen, nullptr, CLSCTX_INPROC_SERVER, IID_IHen, reinterpret_cast<void**>(&hen)));
+
+    auto agileHen = AgilePtr<IHen>(hen);
+    const auto agileObserver = AgilePtr<IAsyncCluckObserver>(observer);
+
+    // The lambda function below is very greedy. It personally owns agileHen, and as a consequence destroys it.
+    // Destruction will access to the main thread, COM does it via Windows Messages.
+    // So GuardedCallable is created to ensure that post WM_QUIT was called after functor destruction.
+    // This will allow us to destroy agileHen owned IAgileReference on main thread apartment.
+
+    // Attentive programmer would ask why don't we use order of lambda capture? The answer is simple, it is not defined.
+    // https://stackoverflow.com/questions/12520611/c11-in-what-order-are-lambda-captures-destructed
+    std::thread thread{ GuardedCallable([agileHen = std::move(agileHen), agileObserver, mainThreadId]
+    {
+        ComRuntime runtime{Apartment::MultiThreaded};
+
+        SetThreadDescription(GetCurrentThread(), L"Worker thread"); // Help debugging
+        HR(agileHen.Get()->CluckAsync(agileObserver.Get()));
+    })};
+
+    // Pump messages from COM runtime to allow function calls from worker thread to
+    // main thread to be processed. This is how COM allows communication between threads.
+    MSG message{};
+    while (const auto result = GetMessage(&message, 0, 0, 0))
+    {
+        if (-1 != result)
+            DispatchMessage(&message);
+    }
+
+    thread.join();
+}
