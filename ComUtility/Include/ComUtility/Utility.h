@@ -73,6 +73,9 @@ private:
     CComPtr<IAgileReference> m_agileRef;
 };
 
+/** Raise system error given a windows specific error code, for example from GetLastError() */
+void RaiseSystemError(DWORD error, const char* message);
+
 // Auto-link
 #ifndef COM_UTILITY_BUILD
 #pragma comment(lib, "ComUtility.lib")
