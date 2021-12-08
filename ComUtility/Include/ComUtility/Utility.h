@@ -2,6 +2,7 @@
 #include <atlbase.h>
 #include <atlcom.h>
 #include <atlcomcli.h>
+
 struct ComException
 {
     HRESULT result;
@@ -71,3 +72,8 @@ public:
 private:
     CComPtr<IAgileReference> m_agileRef;
 };
+
+// Auto-link
+#ifndef COM_UTILITY_BUILD
+#pragma comment(lib, "ComUtility.lib")
+#endif
