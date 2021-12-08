@@ -6,10 +6,17 @@
     <ClInclude Include="Include\ComUtility\Utility.h">
       <Filter>Include\ComUtility</Filter>
     </ClInclude>
+    <ClInclude Include="Include\ComUtility\ComFactory.h">
+      <Filter>Include\ComUtility</Filter>
+    </ClInclude>
+    <ClInclude Include="ComApartment.h" />
+    <ClInclude Include="ThreadSafeQueue.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Utility.cpp" />
+    <ClCompile Include="ComApartment.cpp" />
+    <ClCompile Include="ComFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Include">

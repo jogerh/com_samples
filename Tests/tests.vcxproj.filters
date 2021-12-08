@@ -8,6 +8,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gmock\gmock-all.cc" />
     <ClCompile Include="AtlFreeServerTests.cpp" />
     <ClCompile Include="UtilityTests.cpp" />
+    <ClCompile Include="ComFactoryTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

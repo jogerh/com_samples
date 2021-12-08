@@ -12,7 +12,8 @@ struct ComException
 
 inline void HR(HRESULT const result)
 {
-    if (S_OK != result) throw ComException(result);
+    if (S_OK != result && S_FALSE != result) 
+        throw ComException(result);
 }
 
 /** Helper function to create instances of ATL COM objects */
