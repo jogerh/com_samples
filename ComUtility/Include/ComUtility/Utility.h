@@ -2,6 +2,7 @@
 #include <atlbase.h>
 #include <atlcom.h>
 #include <atlcomcli.h>
+
 struct ComException
 {
     HRESULT result;
@@ -11,7 +12,8 @@ struct ComException
 
 inline void HR(HRESULT const result)
 {
-    if (S_OK != result) throw ComException(result);
+    if (S_OK != result && S_FALSE != result) 
+        throw ComException(result);
 }
 
 /** Helper function to create instances of ATL COM objects */
@@ -71,3 +73,11 @@ public:
 private:
     CComPtr<IAgileReference> m_agileRef;
 };
+
+/** Raise system error given a windows specific error code, for example from GetLastError() */
+void RaiseSystemError(DWORD error, const char* message);
+
+// Auto-link
+#ifndef COM_UTILITY_BUILD
+#pragma comment(lib, "ComUtility.lib")
+#endif

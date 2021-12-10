@@ -18,6 +18,9 @@ public:
 
     HRESULT Cluck() override;
     HRESULT CluckAsync(IAsyncCluckObserver* cluckObserver) override;
+
+private:
+    unsigned long m_myThreadId = GetCurrentThreadId();
 };
 
 OBJECT_ENTRY_AUTO(CLSID_AtlHen, AtlHen)
@@ -35,6 +38,9 @@ public:
     END_COM_MAP()
 
     HRESULT OnCluck() override;
+
+private:
+    unsigned long m_myThreadId = GetCurrentThreadId();
 };
 
 OBJECT_ENTRY_AUTO(CLSID_AtlCluckObserver, AtlCluckObserver)
