@@ -14,10 +14,10 @@
     <VCProjectVersion>17.0</VCProjectVersion>
     <ProjectGuid>{5E012947-A230-4A0C-978F-D9BA692DF2BC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Tests</RootNamespace>
+    <RootNamespace>TutorialsAndTests</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectSubType>NativeUnitTestProject</ProjectSubType>
-    <ProjectName>Tests</ProjectName>
+    <ProjectName>TutorialsAndTests</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">

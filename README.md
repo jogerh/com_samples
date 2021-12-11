@@ -9,6 +9,6 @@ COM Examples contains sample implementations that use Microsoft COM technology. 
 * [AtlFreeServer](AtlFreeServer#atlfreeserver): An COM server implemented without ATL. It provides dogs
 * [ManagedServer](ManagedServer/): An COM server implemented in .NET. Here you can buy dogs.
 * [ComUtility](ComUtility/): COM related utilities used across the projects
-* [Tests](Tests/): Unit tests used to demonstrate how COM objects are used from C++
+* [TutorialsAndTests](TutorialsAndTests/): Tutorials and tests used to demonstrate how COM objects are used from C++
 * [InteropTests](InteropTests/): Unit tests used to demonstrate how COM objects are used from .NET
 
