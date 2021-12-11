@@ -3,8 +3,8 @@
 #include <atlcomcli.h>
 #include <Interfaces/IHen.h>
 #include <Interfaces/IHen_i.c>
-#include <AtlHenLib/AtlHenLib.h>
-#include <AtlHenLib/AtlHenLib_i.c>
+#include <AtlServer/AtlServer.h>
+#include <AtlServer/AtlServer_i.c>
 #include <ComUtility/Utility.h>
 #include <winrt/base.h>
 #include "Mocks/IHenMock.h"

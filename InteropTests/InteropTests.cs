@@ -368,7 +368,7 @@ namespace InteropTests
 
         static IHen CreateAtlHen()
         {
-            Type comServerType = Type.GetTypeFromProgID("AtlHenLib.AtlHen.1");
+            Type comServerType = Type.GetTypeFromProgID("AtlServer.AtlHen.1");
             Assert.NotNull(comServerType);
             return Activator.CreateInstance(comServerType) as IHen;
         }

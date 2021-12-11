@@ -1,7 +1,7 @@
 #include <ComUtility/ComFactory.h>
 #include <ComUtility/Utility.h>
 #include <Interfaces/IHen.h>
-#include <AtlHenLib/AtlHenLib.h>
+#include <AtlServer/AtlServer.h>
 #include <gtest/gtest.h>
 #include <wrl.h>
 using Microsoft::WRL::ComPtr;

@@ -1,21 +1,21 @@
 HKCR
 {
-	AtlHenLib.AtlCluckObserver.1 = s 'AtlCluckObserver implementation object'
+	AtlServer.AtlCluckObserver.1 = s 'AtlCluckObserver implementation object'
     {
         CLSID = s '{5717f50c-8aaa-433b-9077-85edc0a5efc3}'
     }
-    AtlHenLib.AtlCluckObserver = s 'AtlCluckObserver implementation object'
+    AtlServer.AtlCluckObserver = s 'AtlCluckObserver implementation object'
     {
         CLSID = s '{5717f50c-8aaa-433b-9077-85edc0a5efc3}'
-        CurVer = s 'AtlHenLib.AtlCluckObserver.1'
+        CurVer = s 'AtlServer.AtlCluckObserver.1'
     }
 
 	NoRemove CLSID
 	{
 		ForceRemove {5717f50c-8aaa-433b-9077-85edc0a5efc3} = s 'AtlCluckObserver class'
 		{
-			ProgID = s 'AtlHenLib.AtlCluckObserver.1'
-            VersionIndependentProgID = s 'AtlHenLib.AtlCluckObserver'
+			ProgID = s 'AtlServer.AtlCluckObserver.1'
+            VersionIndependentProgID = s 'AtlServer.AtlCluckObserver'
 			InprocServer32 = s '%MODULE%'
 			{
 				val ThreadingModel = s 'Apartment'
