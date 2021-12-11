@@ -155,6 +155,20 @@ HRESULT __stdcall DllGetClassObject(CLSID const & clsid,
                                     IID const & iid,
                                     void ** result)
 {
+    // If you want to play with tests or tutorials involving out-of-process activation,
+    // uncomment the code below. This allows attaching to the dllhost.exe process once
+    // CoCreateInstance(... CLSCTX_LOCAL_SERVER ...) has been called.
+    //
+    // To find the process id of the dllhost.exe that hosts the COM server, enable the 'Command line'
+    // column in task manager, and look for the process with command line containing
+    //
+    //    /Processid:{2b083fea-3681-4c9b-9ed1-3e866124a58d}
+    //
+    // The guid is the 'AppID' that was used when registering the AtlFreeServer
+
+    //while (!IsDebuggerPresent())
+    //    Sleep(100);
+
     assert(result);
     *result = nullptr;
 

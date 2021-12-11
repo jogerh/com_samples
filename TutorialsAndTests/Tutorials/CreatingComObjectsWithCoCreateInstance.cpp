@@ -84,3 +84,38 @@ TEST(CreatingComObjects,
 
     EXPECT_NE(dog, nullptr);
 }
+
+
+//
+// How to create objects in a different process?
+//
+TEST(CreatingComObjects,
+    how_does_cocreateinstance_create_objects_in_a_separate_process)
+{
+    ComPtr<IDog> dog;
+
+    // As long as the COM server is enabling activation through the COM surrogate, the only change
+    // we need to do to create the objects on a separate server, is to change the CLSCTX_INPROC_SERVER
+    // to CLSCTX_LOCAL_SERVER.
+    //
+    // To play with this in the debugger, uncomment the first code lines in AtlFreeServer/GuardDog.cpp
+    // that sleeps until debugger is attached, and attach to the corresponding dllhost.exe once
+    // CoCreateInstance starts to hang.
+    //
+    // To find the process id of the dllhost.exe that hosts the COM server, enable the 'Command line'
+    // column in task manager, and look for the process with command line containing
+    //
+    //    /Processid:{2b083fea-3681-4c9b-9ed1-3e866124a58d}
+    //
+    // The guid is the 'AppID' that was used when registering the AtlFreeServer
+    //
+
+    HR(CoCreateInstance(
+        __uuidof(GuardDog),
+        nullptr,
+        CLSCTX_LOCAL_SERVER,
+        __uuidof(IDog),
+        reinterpret_cast<void**>(dog.GetAddressOf())));
+
+    EXPECT_NE(dog, nullptr);
+}

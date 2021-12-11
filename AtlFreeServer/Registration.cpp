@@ -101,14 +101,38 @@ struct Entry
 
 static Entry Table[] =
 {
+    // Register the dll 'AppID' allows the COM dll to run as an out of
+    // process COM server under the dllhost.exe. This requires creating
+    // a new guid for the AppID, and adding the DllSurrogate key. The
+    // AppId is just another guid that registration of COM classes can
+    // refer to as their AppID.
+    {
+        L"Software\\Classes\\AppID\\{2b083fea-3681-4c9b-9ed1-3e866124a58d}",
+        EntryOption::Delete,
+        nullptr,
+        L"AtlFreeServer Object"
+    },
+    {
+        L"Software\\Classes\\AppID\\{2b083fea-3681-4c9b-9ed1-3e866124a58d}",
+        EntryOption::None,
+        L"DllSurrogate",
+        L""
+    },
 
     // Registration of GuardDog COM class
-
-    {   // Adds the UID of the COM GuardDog class as key in the Registry
+    {
+        // Adds the UID of the COM GuardDog class as key in the Registry
         L"Software\\Classes\\CLSID\\{d162d2f7-cdf4-44bc-8018-6058420bcfdc}",
         EntryOption::Delete,
         nullptr,
         L"GuardDog COM class"
+    },
+    {   // Associates the GuardDog with the AppID, and allows creating GuardDogs
+        // in a separate process.
+        L"Software\\Classes\\CLSID\\{d162d2f7-cdf4-44bc-8018-6058420bcfdc}",
+        EntryOption::None,
+        L"AppID",
+        L"{2b083fea-3681-4c9b-9ed1-3e866124a58d}"
     },
     {   // Adds InprocServer32 subkey to GuardDog COM class with a default value containing the dll filename
         L"Software\\Classes\\CLSID\\{d162d2f7-cdf4-44bc-8018-6058420bcfdc}\\InprocServer32",
