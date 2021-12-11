@@ -1,0 +1,15 @@
+import "oaidl.idl";
+import "ocidl.idl";
+import "IDog.idl";
+import "IHen.idl";
+
+[
+	oleautomation,
+	object,
+	uuid(7ea81732-10b2-4d8d-88f7-3c73f552dc39),
+	pointer_default(unique)
+]
+interface IPetShop : IUnknown
+{
+	HRESULT BuyDog([out, retval] IDog** dog);
+};

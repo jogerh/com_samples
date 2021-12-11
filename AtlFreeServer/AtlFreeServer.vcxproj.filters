@@ -25,13 +25,16 @@
     <ClCompile Include="..\Build\Output\Include\Interfaces\IHen_p.c">
       <Filter>Proxy</Filter>
     </ClCompile>
-    <ClCompile Include="..\Build\Output\Include\Interfaces\Interfaces_i.c">
-      <Filter>Proxy</Filter>
-    </ClCompile>
     <ClCompile Include="..\Build\Output\Include\Interfaces\IPostman_i.c">
       <Filter>Proxy</Filter>
     </ClCompile>
     <ClCompile Include="..\Build\Output\Include\Interfaces\IPostman_p.c">
+      <Filter>Proxy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Build\Output\Include\Interfaces\IPetShop_i.c">
+      <Filter>Proxy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Build\Output\Include\Interfaces\IPetShop_p.c">
       <Filter>Proxy</Filter>
     </ClCompile>
   </ItemGroup>
