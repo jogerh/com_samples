@@ -13,7 +13,7 @@ During midl compilation, each .idl file produces:
 * Optionally a proxy stub file (_p.c) containing an implementation of the proxy/stub for the interfaces. The proxy/stub code can be used to allow COM objects to communicate across processes and threads.
 * Optionally a type library file (.tlb) if the .idl file contains a 'library' section.
 
-The Interfaces.idl is different from the other .idl files because it also provides a 'library' section. A 'library' is a collection of interfaces, COM class definitions, and COM types. When the midl.exe comes over a library, it generates a .tlb file that contains a type library. The .tlb file contains the same information as the .idl file, but in binary form. The type library is discussed in more detail in [AtlHenLib](../AtlServer/readme.md#tlb-files---com-type-libraries).
+The Interfaces.idl is different from the other .idl files because it also provides a 'library' section. A 'library' is a collection of interfaces, COM class definitions, and COM types. When the midl.exe comes over a library, it generates a .tlb file that contains a type library. The .tlb file contains the same information as the .idl file, but in binary form. The type library is discussed in more detail in [AtlServer](../AtlServer/readme.md#tlb-files---com-type-libraries).
 
 To add COM types to the type library, simply add forward references to the interface or type from the 'library' section.
 

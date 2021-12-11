@@ -1,6 +1,6 @@
 #pragma once
 #include "resource.h" // main symbols
-#include <AtlHenLib/AtlHenLib.h>
+#include <AtlServer/AtlServer.h>
 
 using namespace ATL;
 

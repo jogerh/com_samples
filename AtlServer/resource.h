@@ -4,7 +4,7 @@
 //
 #define IDS_PROJNAME                    100
 #define IDR_APPID                       105
-#define IDR_ATLHENLIB                   106
+#define IDR_ATLSERVER                   106
 #define IDR_HEN                         107
 #define IDR_ASYNCCLUCKOBSERVER          108
 

@@ -14,23 +14,23 @@
     <None Include="AppId.rgs" />
     <None Include="AtlCluckObserver.rgs" />
     <None Include="AtlHen.rgs" />
-    <None Include="AtlHenModule.def" />
-    <None Include="AtlHenLib.rgs" />
+    <None Include="AtlServer.def" />
+    <None Include="AtlServer.rgs" />
     <None Include="readme.md" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AtlHen.cpp" />
-    <ClCompile Include="AtlHenModule.cpp" />
+    <ClCompile Include="AtlServer.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="AtlHenLib.idl" />
+    <Midl Include="AtlServer.idl" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="AtlHenLib.rc" />
+    <ResourceCompile Include="AtlServer.rc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AtlHen.h" />
@@ -45,7 +45,7 @@
     <ProjectGuid>{bbf5b28e-ac9b-4bfc-ba3f-eb9df435dcac}</ProjectGuid>
     <RootNamespace>atlserver</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>AtlHenLib</ProjectName>
+    <ProjectName>AtlServer</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -97,7 +97,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <ModuleDefinitionFile>AtlHenModule.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>AtlServer.def</ModuleDefinitionFile>
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>../Interfaces</AdditionalIncludeDirectories>
@@ -127,7 +127,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <ModuleDefinitionFile>AtlHenModule.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>AtlServer.def</ModuleDefinitionFile>
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>../Interfaces</AdditionalIncludeDirectories>

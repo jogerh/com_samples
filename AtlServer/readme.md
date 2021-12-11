@@ -1,4 +1,4 @@
-# AtlHenLib
+# AtlServer
 
 This library implements a COM server using ATL. It shows the various parts of how to create a COM dll that supports in-process and out-of-process activation.
 
