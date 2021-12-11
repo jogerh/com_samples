@@ -2,25 +2,35 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="AtlHenTests.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gtest\gtest-all.cc" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gmock\gmock-all.cc" />
-    <ClCompile Include="AtlFreeServerTests.cpp" />
-    <ClCompile Include="UtilityTests.cpp" />
-    <ClCompile Include="ComFactoryTests.cpp" />
-    <ClCompile Include="ManagedServerTests.cpp" />
     <ClCompile Include="Tutorials\CreatingComObjectsWithCoCreateInstance.cpp">
-      <Filter>Tutorial Creating COM Objects</Filter>
+      <Filter>Tutorials</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\AtlFreeServerTests.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\AtlHenTests.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\ComFactoryTests.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\ManagedServerTests.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\UtilityTests.cpp">
+      <Filter>Tests</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Mocks\IHenMock.h">
-      <Filter>Mocks</Filter>
+    <ClInclude Include="Tests\Mocks\IHenMock.h">
+      <Filter>Tests\Mocks</Filter>
     </ClInclude>
-    <ClInclude Include="Mocks\IPostmanMock.h">
-      <Filter>Mocks</Filter>
+    <ClInclude Include="Tests\Mocks\IPostmanMock.h">
+      <Filter>Tests\Mocks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -28,10 +38,13 @@
     <None Include="RegisterDependencies.bat" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Mocks">
-      <UniqueIdentifier>{8f99da9a-a6c3-4200-8a33-ee04d9693cb8}</UniqueIdentifier>
+    <Filter Include="Tests">
+      <UniqueIdentifier>{cba934d8-d405-4c35-b320-125a53eae619}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Tutorial Creating COM Objects">
+    <Filter Include="Tests\Mocks">
+      <UniqueIdentifier>{5e3df2fa-2bc3-4741-bdeb-0c99bf35cf1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tutorials">
       <UniqueIdentifier>{aa881f9a-deb1-4d3c-a12d-c13286583ff9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
