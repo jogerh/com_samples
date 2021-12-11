@@ -18,5 +18,14 @@ namespace ManagedServer
             Type comServerType = Type.GetTypeFromCLSID(new Guid("d162d2f7-cdf4-44bc-8018-6058420bcfdc"));
             return Activator.CreateInstance(comServerType ?? throw new COMException()) as IDog;
         }
+
+        public Address GetAddress()
+        {
+            var address = new Address();
+            address.Street = "Suhms gate";
+            address.PostalCode = "0363";
+            address.City = "Oslo";
+            return address;
+        }
     }
 }

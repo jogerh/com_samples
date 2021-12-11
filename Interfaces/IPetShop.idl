@@ -3,6 +3,12 @@ import "ocidl.idl";
 import "IDog.idl";
 import "IHen.idl";
 
+typedef struct {
+	BSTR Street;
+	BSTR PostalCode;
+	BSTR City;
+} Address;
+
 [
 	oleautomation,
 	object,
@@ -12,4 +18,5 @@ import "IHen.idl";
 interface IPetShop : IUnknown
 {
 	HRESULT BuyDog([out, retval] IDog** dog);
+	HRESULT GetAddress([out, retval] Address* address);
 };
