@@ -15,6 +15,7 @@
     <Midl Include="Interfaces.idl" />
     <Midl Include="IDog.idl" />
     <Midl Include="IPostman.idl" />
+    <Midl Include="IPetShop.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="readme.md" />
