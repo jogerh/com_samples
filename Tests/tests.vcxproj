@@ -112,6 +112,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="AtlHenTests.cpp" />
+    <ClCompile Include="Tutorials\CreatingComObjectsWithCoCreateInstance.cpp" />
     <ClCompile Include="UtilityTests.cpp" />
   </ItemGroup>
   <ItemGroup>

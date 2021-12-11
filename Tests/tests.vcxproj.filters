@@ -10,6 +10,9 @@
     <ClCompile Include="UtilityTests.cpp" />
     <ClCompile Include="ComFactoryTests.cpp" />
     <ClCompile Include="ManagedServerTests.cpp" />
+    <ClCompile Include="Tutorials\CreatingComObjectsWithCoCreateInstance.cpp">
+      <Filter>Tutorial Creating COM Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -27,6 +30,9 @@
   <ItemGroup>
     <Filter Include="Mocks">
       <UniqueIdentifier>{8f99da9a-a6c3-4200-8a33-ee04d9693cb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tutorial Creating COM Objects">
+      <UniqueIdentifier>{aa881f9a-deb1-4d3c-a12d-c13286583ff9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
