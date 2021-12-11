@@ -9,6 +9,7 @@
     <ClCompile Include="AtlFreeServerTests.cpp" />
     <ClCompile Include="UtilityTests.cpp" />
     <ClCompile Include="ComFactoryTests.cpp" />
+    <ClCompile Include="ManagedServerTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
