@@ -14,10 +14,10 @@
     <VCProjectVersion>17.0</VCProjectVersion>
     <ProjectGuid>{5E012947-A230-4A0C-978F-D9BA692DF2BC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Tests</RootNamespace>
+    <RootNamespace>TutorialsAndTests</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectSubType>NativeUnitTestProject</ProjectSubType>
-    <ProjectName>Tests</ProjectName>
+    <ProjectName>TutorialsAndTests</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -103,21 +103,22 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AtlFreeServerTests.cpp" />
-    <ClCompile Include="ComFactoryTests.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="ManagedServerTests.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="AtlHenTests.cpp" />
-    <ClCompile Include="UtilityTests.cpp" />
+    <ClCompile Include="Tests\AtlFreeServerTests.cpp" />
+    <ClCompile Include="Tests\AtlHenTests.cpp" />
+    <ClCompile Include="Tests\ComFactoryTests.cpp" />
+    <ClCompile Include="Tests\ManagedServerTests.cpp" />
+    <ClCompile Include="Tests\UtilityTests.cpp" />
+    <ClCompile Include="Tutorials\CreatingComObjectsWithCoCreateInstance.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Mocks\IHenMock.h" />
-    <ClInclude Include="Mocks\IPostmanMock.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Tests\Mocks\IHenMock.h" />
+    <ClInclude Include="Tests\Mocks\IPostmanMock.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

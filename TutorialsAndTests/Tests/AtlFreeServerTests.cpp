@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "../pch.h"
 #include <gtest/gtest.h>
 #include <Interfaces/IDog.h>
 #include <AtlFreeServer/GuardDog.h>
