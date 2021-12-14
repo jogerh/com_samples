@@ -13,6 +13,12 @@
     <ClCompile Include="..\Build\Output\Include\Interfaces\dlldata.c">
       <Filter>Proxy</Filter>
     </ClCompile>
+    <ClCompile Include="..\Build\Output\Include\Interfaces\IRoyalPython_i.c">
+      <Filter>Proxy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Build\Output\Include\Interfaces\IRoyalPython_p.c">
+      <Filter>Proxy</Filter>
+    </ClCompile>
     <ClCompile Include="..\Build\Output\Include\Interfaces\IDog_i.c">
       <Filter>Proxy</Filter>
     </ClCompile>

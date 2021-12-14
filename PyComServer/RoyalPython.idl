@@ -1,0 +1,16 @@
+import "oaidl.idl";
+import "ocidl.idl";
+import "..\Interfaces\IRoyalPython.idl";
+
+[
+    uuid(F0D8338A-BDC1-45D7-A14F-27D64E7BCA18)
+]
+library PyComServer
+{
+    importlib("stdole2.tlb");
+
+    [uuid(F405A270-9088-4800-A5CD-A5E1DED02AB4)]
+    coclass RoyalPython {
+        [default] interface IRoyalPython;
+    };
+};

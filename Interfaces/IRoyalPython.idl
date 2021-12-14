@@ -1,0 +1,13 @@
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	oleautomation,
+	object,
+	uuid(0A315D51-1316-4822-9DB8-0980E4AFC7E0),
+	pointer_default(unique)
+]
+interface IRoyalPython : IUnknown
+{
+	HRESULT Eat();
+};
