@@ -119,7 +119,7 @@ std::future<HRESULT> ComApartment::InvokeOnApartment(std::function<HRESULT()> ca
 {
     assert(m_threadId != 0); // To document that at this time, m_threadId is always non-zero.
 
-    std::packaged_task task([func = std::move(callable), this]
+    std::packaged_task<HRESULT()> task([func = std::move(callable), this]
     {
         return func();
     });
