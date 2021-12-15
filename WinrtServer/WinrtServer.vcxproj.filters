@@ -23,11 +23,15 @@
   <ItemGroup>
     <None Include="WinrtServer.def" />
     <None Include="packages.config" />
+    <None Include="CreateCppInterop.bat" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PropertySheet.props" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="WinrtServer.manifest" />
   </ItemGroup>
 </Project>

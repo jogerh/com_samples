@@ -112,6 +112,10 @@
     <ClCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <PostBuildEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CreateCppInterop.bat $(OutDir)</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Generating C++ interop</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
     <ClCompile>
@@ -121,6 +125,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <PostBuildEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CreateCppInterop.bat $(OutDir)</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Generating C++ interop</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -141,6 +149,7 @@
     <Midl Include="Programmer.idl" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="CreateCppInterop.bat" />
     <None Include="packages.config" />
     <None Include="WinrtServer.def" />
   </ItemGroup>
@@ -149,6 +158,7 @@
     <Text Include="readme.txt">
       <DeploymentContent>false</DeploymentContent>
     </Text>
+    <Manifest Include="WinrtServer.manifest" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
