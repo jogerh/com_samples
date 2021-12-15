@@ -1,12 +1,12 @@
 ﻿#pragma once
 
-#include "Class.g.h"
+#include "Programmer.g.h"
 
 namespace winrt::WinrtServer::implementation
 {
-    struct Class : ClassT<Class>
+    struct Programmer : ProgrammerT<Programmer>
     {
-        Class() = default;
+        Programmer() = default;
 
         int32_t MyProperty();
         void MyProperty(int32_t value);
@@ -15,7 +15,7 @@ namespace winrt::WinrtServer::implementation
 
 namespace winrt::WinrtServer::factory_implementation
 {
-    struct Class : ClassT<Class, implementation::Class>
+    struct Programmer : ProgrammerT<Programmer, implementation::Programmer>
     {
     };
 }
