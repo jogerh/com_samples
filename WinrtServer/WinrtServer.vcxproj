@@ -90,11 +90,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Build\Output\</OutDir>
-    <IntDir>$(SolutionDir)\Build\Intermediate\$(ProjectName)\</IntDir>
+    <IntDir>$(SolutionDir)\Build\Intermediate\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Build\Output\</OutDir>
-    <IntDir>$(SolutionDir)\Build\Intermediate\$(ProjectName)\</IntDir>
+    <IntDir>$(SolutionDir)\Build\Intermediate\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
