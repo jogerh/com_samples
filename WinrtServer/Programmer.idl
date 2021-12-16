@@ -9,6 +9,8 @@ namespace WinrtServer
     struct Favorites {
         String Drink;
         String Activity;
+
+        //UInt8[] buffer; // arrays in structs not supported (see https://github.com/MicrosoftDocs/winrt-related/issues/112)
     };
 
     [default_interface]
