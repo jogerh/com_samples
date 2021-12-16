@@ -1,7 +1,7 @@
 #include "../pch.h"
 #include <gtest/gtest.h>
 #include <ComUtility/Utility.h>
-#include <WinrtServer/WinrtServer.h>
+#include <winrt/WinrtServer.h>
 
 #pragma comment (lib, "runtimeobject.lib")
 
