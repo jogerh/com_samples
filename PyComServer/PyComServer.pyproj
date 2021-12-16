@@ -28,6 +28,7 @@
     <Compile Include="PyComServer.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="readme.md" />
     <Content Include="RoyalPython.idl" />
     <Content Include="requirements.txt" />
   </ItemGroup>
