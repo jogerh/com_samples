@@ -22,8 +22,8 @@ namespace winrt::WinrtServer::implementation
     Favorites Programmer::GetFavorites()
     {
         Favorites favorites{};
-        favorites.FavoriteActivity = L"Coding";
-        favorites.FavoriteDrink = L"Coffee";
+        favorites.Activity = L"Coding";
+        favorites.Drink = L"Coffee";
 
         return favorites;
     }

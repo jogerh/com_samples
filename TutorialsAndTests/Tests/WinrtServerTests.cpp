@@ -79,10 +79,10 @@ TEST(WinrtServerTests, RequireThat_GetFavorites_ReturnsStructsOfStrings)
     // this can easily cause memory leaks. These are avoided by taking ownership
     // of each struct member
     HString favoriteDrink;
-    favoriteDrink.Attach(favorites.FavoriteDrink);
+    favoriteDrink.Attach(favorites.Drink);
 
     HString favoriteActivity;
-    favoriteActivity.Attach(favorites.FavoriteActivity);
+    favoriteActivity.Attach(favorites.Activity);
 
     EXPECT_STREQ(favoriteDrink.GetRawBuffer(nullptr), L"Coffee");
     EXPECT_STREQ(favoriteActivity.GetRawBuffer(nullptr), L"Coding");

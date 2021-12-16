@@ -7,8 +7,8 @@ namespace WinrtServer
     };
 
     struct Favorites {
-        String FavoriteDrink;
-        String FavoriteActivity;
+        String Drink;
+        String Activity;
     };
 
     [default_interface]
