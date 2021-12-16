@@ -27,4 +27,12 @@ namespace winrt::WinrtServer::implementation
         sum.z = a.z + b.z;
         return sum;
     }
+
+    Favorites Programmer::GetFavorites()
+    {
+        Favorites favorites{};
+        favorites.Activity = L"Coding";
+        favorites.Drink = L"Coffee";
+        return favorites;
+    }
 }
