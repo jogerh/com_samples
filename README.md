@@ -15,6 +15,6 @@ COM Examples contains sample implementations that use Microsoft COM technology. 
 
 ## Building
 
-Dependencies: 
-* Visual Studio 2019 with Universal Windows Platform development workload
+### Dependencies
+* Visual Studio 2019 with MFC and Universal Windows Platform development workload
 * [C++/WinRT templates and visualizer for VS2019 (Wsix)](https://docs.microsoft.com/en-us/windows/uwp/cpp-and-winrt-apis/intro-to-using-cpp-with-winrt#visual-studio-support-for-cwinrt-xaml-the-vsix-extension-and-the-nuget-package)
