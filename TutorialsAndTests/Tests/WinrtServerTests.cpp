@@ -1,61 +1,43 @@
 #include "../pch.h"
 #include <gtest/gtest.h>
-#include <wrl/client.h>
-#include <wrl/wrappers/corewrappers.h>
 #include <ComUtility/Utility.h>
 #include <WinrtServer/WinrtServer.h>
-
-using namespace ABI::Windows::Foundation;
-using namespace Microsoft::WRL;
-using namespace Microsoft::WRL::Wrappers;
 
 #pragma comment (lib, "runtimeobject.lib")
 
 TEST(WinrtServerTests, RequireThat_ActivateInstance_CreatesProgrammer)
 {
-    // Initialize the Windows Runtime.
-    RoInitializeWrapper initialize(RO_INIT_SINGLETHREADED);
-    HR(initialize);
+    init_apartment(winrt::apartment_type::single_threaded);
 
-    ComPtr<ABI::WinrtServer::IProgrammer> programmer;
-    HR(ActivateInstance(HStringReference(L"WinrtServer.Programmer").Get(), programmer.GetAddressOf()));
-
-    EXPECT_NE(programmer.Get(), nullptr);
+    const auto factory = winrt::get_activation_factory(L"WinrtServer.Programmer");
+    EXPECT_NO_THROW(factory.ActivateInstance<winrt::WinrtServer::Programmer>());
 }
 
 TEST(WinrtServerTests, RequireThat_GivingProgrammerCoffee_IncreasesMotviation)
 {
-    // Initialize the Windows Runtime.
-    RoInitializeWrapper initialize(RO_INIT_SINGLETHREADED);
-    HR(initialize);
+    init_apartment(winrt::apartment_type::single_threaded);
 
-    ComPtr<ABI::WinrtServer::IProgrammer> programmer;
-    HR(ActivateInstance(HStringReference(L"WinrtServer.Programmer").Get(), programmer.GetAddressOf()));
+    const auto factory = winrt::get_activation_factory(L"WinrtServer.Programmer");
+    const auto programmer = factory.ActivateInstance<winrt::WinrtServer::Programmer>();
 
-    int motivationBeforeCoffee = 0;
-    HR(programmer->get_Motivation(&motivationBeforeCoffee));
+    const int motivationBeforeCoffee = programmer.Motivation();
 
-    HR(programmer->GiveCoffee());
+    programmer.GiveCoffee();
 
-    int motivationAfterCoffee = 0;
-    HR(programmer->get_Motivation(&motivationAfterCoffee));
-
-    EXPECT_TRUE(motivationAfterCoffee > motivationBeforeCoffee);
+    EXPECT_TRUE(programmer.Motivation() > motivationBeforeCoffee);
 }
 
 TEST(WinrtServerTests, RequireThat_ProgrammerCanAdd3dCoordinates)
 {
-    // Initialize the Windows Runtime.
-    RoInitializeWrapper initialize(RO_INIT_SINGLETHREADED);
-    HR(initialize);
+    init_apartment(winrt::apartment_type::single_threaded);
 
-    ComPtr<ABI::WinrtServer::IProgrammer> programmer;
-    HR(ActivateInstance(HStringReference(L"WinrtServer.Programmer").Get(), programmer.GetAddressOf()));
+    const auto factory = winrt::get_activation_factory(L"WinrtServer.Programmer");
+    const auto programmer = factory.ActivateInstance<winrt::WinrtServer::Programmer>();
 
-    ABI::WinrtServer::Pos3 a = { 1, 2, 3 };
-    ABI::WinrtServer::Pos3 b = { 1, 2, 3 };
-    ABI::WinrtServer::Pos3 sum = {}; // zero-initialize
-    HR(programmer->Add(a, b, &sum));
+    winrt::WinrtServer::Pos3 a = { 1, 2, 3 };
+    winrt::WinrtServer::Pos3 b = { 1, 2, 3 };
+
+    const auto sum = programmer.Add(a, b);
 
     EXPECT_EQ(sum.x, a.x + b.x);
     EXPECT_EQ(sum.y, a.y + b.y);
