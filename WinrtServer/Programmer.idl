@@ -6,6 +6,11 @@ namespace WinrtServer
         Single z;
     };
 
+    struct Favorites {
+        String FavoriteDrink;
+        String FavoriteActivity;
+    };
+
     [default_interface]
     runtimeclass Programmer
     {
@@ -15,5 +20,6 @@ namespace WinrtServer
         void GiveCoffee();
         void WriteDocumentation();
         Pos3 Add(Pos3 a, Pos3 b);
+        Favorites GetFavorites();
     }
 }

@@ -19,6 +19,15 @@ namespace winrt::WinrtServer::implementation
         return m_motivation;
     }
 
+    Favorites Programmer::GetFavorites()
+    {
+        Favorites favorites{};
+        favorites.FavoriteActivity = L"Coding";
+        favorites.FavoriteDrink = L"Coffee";
+
+        return favorites;
+    }
+
     Pos3 Programmer::Add(Pos3 a, Pos3 b)
     {
         Pos3 sum = {}; // zero-initialize
