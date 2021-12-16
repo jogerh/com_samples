@@ -43,3 +43,16 @@ TEST(WinrtServerTests, RequireThat_ProgrammerCanAdd3dCoordinates)
     EXPECT_EQ(sum.y, a.y + b.y);
     EXPECT_EQ(sum.z, a.z + b.z);
 }
+
+TEST(WinrtServerTests, RequireThat_GetFavorites_ReturnsStructWithStrings)
+{
+    init_apartment(winrt::apartment_type::single_threaded);
+
+    const auto factory = winrt::get_activation_factory(L"WinrtServer.Programmer");
+    const auto programmer = factory.ActivateInstance<winrt::WinrtServer::Programmer>();
+
+    auto favorites = programmer.GetFavorites();
+
+    EXPECT_EQ(favorites.Activity, L"Coding");
+    EXPECT_EQ(favorites.Drink, L"Coffee");
+}

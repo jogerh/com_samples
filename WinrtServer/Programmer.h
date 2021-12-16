@@ -12,7 +12,7 @@ namespace winrt::WinrtServer::implementation
         void WriteDocumentation();
         int Motivation();
         Pos3 Add(Pos3 a, Pos3 b);
-
+        Favorites GetFavorites();
 
     private:
         int m_motivation = 0;
