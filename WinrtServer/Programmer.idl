@@ -1,5 +1,11 @@
 namespace WinrtServer
 {
+    struct Pos3 {
+        Single x;
+        Single y;
+        Single z;
+    };
+
     [default_interface]
     runtimeclass Programmer
     {
@@ -8,5 +14,6 @@ namespace WinrtServer
         Int32 Motivation{ get; };
         void GiveCoffee();
         void WriteDocumentation();
+        Pos3 Add(Pos3 a, Pos3 b);
     }
 }

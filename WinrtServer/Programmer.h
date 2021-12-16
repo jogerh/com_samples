@@ -11,6 +11,7 @@ namespace winrt::WinrtServer::implementation
         void GiveCoffee();
         void WriteDocumentation();
         int Motivation();
+        Pos3 Add(Pos3 a, Pos3 b);
 
 
     private:

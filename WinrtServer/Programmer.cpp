@@ -18,4 +18,13 @@ namespace winrt::WinrtServer::implementation
     {
         return m_motivation;
     }
+
+    Pos3 Programmer::Add(Pos3 a, Pos3 b)
+    {
+        Pos3 sum = {}; // zero-initialize
+        sum.x = a.x + b.x;
+        sum.y = a.y + b.y;
+        sum.z = a.z + b.z;
+        return sum;
+    }
 }
