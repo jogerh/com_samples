@@ -5,7 +5,6 @@
 #include <ComUtility/Utility.h>
 #include <wrl.h>
 
-using namespace testing;
 using Microsoft::WRL::ComPtr;
 
 TEST(ManagedServerTests,
