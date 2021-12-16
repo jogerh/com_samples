@@ -12,3 +12,8 @@ COM Examples contains sample implementations that use Microsoft COM technology. 
 * [TutorialsAndTests](TutorialsAndTests/): Tutorials and tests used to demonstrate how COM objects are used from C++
 * [InteropTests](InteropTests/): Unit tests used to demonstrate how COM objects are used from .NET
 
+## Building
+
+Dependencies: 
+* Visual Studio 2019 with Universal Windows Platform development workload
+* [C++/WinRT templates and visualizer for VS2019 (Wsix)](https://docs.microsoft.com/en-us/windows/uwp/cpp-and-winrt-apis/intro-to-using-cpp-with-winrt#visual-studio-support-for-cwinrt-xaml-the-vsix-extension-and-the-nuget-package)

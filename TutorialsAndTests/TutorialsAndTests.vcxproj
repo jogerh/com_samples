@@ -113,6 +113,7 @@
     <ClCompile Include="Tests\ComFactoryTests.cpp" />
     <ClCompile Include="Tests\ManagedServerTests.cpp" />
     <ClCompile Include="Tests\UtilityTests.cpp" />
+    <ClCompile Include="Tests\WinrtServerTests.cpp" />
     <ClCompile Include="Tutorials\CreatingComObjectsWithCoCreateInstance.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +124,9 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="RegisterDependencies.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="TutorialsAndTests.exe.manifest" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

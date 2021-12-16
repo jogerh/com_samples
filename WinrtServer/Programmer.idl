@@ -1,0 +1,12 @@
+namespace WinrtServer
+{
+    [default_interface]
+    runtimeclass Programmer
+    {
+        Programmer();
+
+        Int32 Motivation{ get; };
+        void GiveCoffee();
+        void WriteDocumentation();
+    }
+}

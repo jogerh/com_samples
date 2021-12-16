@@ -23,6 +23,9 @@
     <ClCompile Include="Tests\UtilityTests.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
+    <ClCompile Include="Tests\WinrtServerTests.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -47,5 +50,8 @@
     <Filter Include="Tutorials">
       <UniqueIdentifier>{aa881f9a-deb1-4d3c-a12d-c13286583ff9}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="TutorialsAndTests.exe.manifest" />
   </ItemGroup>
 </Project>
