@@ -4,6 +4,10 @@
 
 namespace winrt::WinrtServer::implementation
 {
+    Programmer::Programmer() {
+        m_buffer = { 1, 2, 3, 4, 5, 6, 7, 8 };
+    }
+
     void Programmer::GiveCoffee()
     {
         ++m_motivation;
@@ -34,5 +38,11 @@ namespace winrt::WinrtServer::implementation
         favorites.Activity = L"Coding";
         favorites.Drink = L"Coffee";
         return favorites;
+    }
+
+    com_array<uint8_t> Programmer::Buffer()
+    {
+        // return a copy
+        return com_array<uint8_t>{ m_buffer.begin(), m_buffer.end() };
     }
 }

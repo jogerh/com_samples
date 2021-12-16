@@ -22,5 +22,6 @@ namespace WinrtServer
         Pos3 Add(Pos3 a, Pos3 b);
 
         Favorites GetFavorites();
+        UInt8[] Buffer{ get; };
     }
 }
