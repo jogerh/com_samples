@@ -113,6 +113,7 @@
     <ClCompile Include="Tests\ComFactoryTests.cpp" />
     <ClCompile Include="Tests\ManagedServerTests.cpp" />
     <ClCompile Include="Tests\UtilityTests.cpp" />
+    <ClCompile Include="Tests\WinrtServerTests.cpp" />
     <ClCompile Include="Tutorials\CreatingComObjectsWithCoCreateInstance.cpp" />
   </ItemGroup>
   <ItemGroup>
