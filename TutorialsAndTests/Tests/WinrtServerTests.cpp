@@ -20,6 +20,25 @@ TEST(WinrtServerTests, RequireThat_ActivateInstance_CreatesProgrammer)
     ComPtr<ABI::WinrtServer::IProgrammer> programmer;
     HR(ActivateInstance(HStringReference(L"WinrtServer.Programmer").Get(), programmer.GetAddressOf()));
 
-    INT32 v = 0;
-    EXPECT_EQ(programmer->get_MyProperty(&v), E_NOTIMPL);
+    EXPECT_NE(programmer.Get(), nullptr);
+}
+
+TEST(WinrtServerTests, RequireThat_GivingProgrammerCoffee_IncreasesMotviation)
+{
+    // Initialize the Windows Runtime.
+    RoInitializeWrapper initialize(RO_INIT_SINGLETHREADED);
+    HR(initialize);
+
+    ComPtr<ABI::WinrtServer::IProgrammer> programmer;
+    HR(ActivateInstance(HStringReference(L"WinrtServer.Programmer").Get(), programmer.GetAddressOf()));
+
+    int motivationBeforeCoffee = 0;
+    HR(programmer->get_Motivation(&motivationBeforeCoffee));
+
+    HR(programmer->GiveCoffee());
+
+    int motivationAfterCoffee = 0;
+    HR(programmer->get_Motivation(&motivationAfterCoffee));
+
+    EXPECT_TRUE(motivationAfterCoffee > motivationBeforeCoffee);
 }

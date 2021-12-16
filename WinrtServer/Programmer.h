@@ -8,8 +8,13 @@ namespace winrt::WinrtServer::implementation
     {
         Programmer() = default;
 
-        int32_t MyProperty();
-        void MyProperty(int32_t value);
+        void GiveCoffee();
+        void WriteDocumentation();
+        int Motivation();
+
+
+    private:
+        int m_motivation = 0;
     };
 }
 

@@ -4,13 +4,18 @@
 
 namespace winrt::WinrtServer::implementation
 {
-    int32_t Programmer::MyProperty()
+    void Programmer::GiveCoffee()
     {
-        throw hresult_not_implemented();
+        ++m_motivation;
     }
 
-    void Programmer::MyProperty(int32_t /* value */)
+    void Programmer::WriteDocumentation()
     {
-        throw hresult_not_implemented();
+        --m_motivation;
+    }
+
+    int Programmer::Motivation()
+    {
+        return m_motivation;
     }
 }
