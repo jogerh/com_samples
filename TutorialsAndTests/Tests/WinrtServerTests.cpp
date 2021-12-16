@@ -43,3 +43,29 @@ TEST(WinrtServerTests, RequireThat_ProgrammerCanAdd3dCoordinates)
     EXPECT_EQ(sum.y, a.y + b.y);
     EXPECT_EQ(sum.z, a.z + b.z);
 }
+
+TEST(WinrtServerTests, RequireThat_GetFavorites_ReturnsStructsOfStrings)
+{
+    // Initialize the Windows Runtime.
+    RoInitializeWrapper initialize(RO_INIT_SINGLETHREADED);
+    HR(initialize);
+
+    ComPtr<ABI::WinrtServer::IProgrammer> programmer;
+    HR(ActivateInstance(HStringReference(L"WinrtServer.Programmer").Get(), programmer.GetAddressOf()));
+
+    ABI::WinrtServer::Favorites favorites{};
+    HR(programmer->GetFavorites(&favorites));
+
+    // It is the responsible of the caller to ensure that resources that the server
+    // allocated to proide output data are released. When working with structs,
+    // this can easily cause memory leaks. These are avoided by taking ownership
+    // of each struct member
+    HString favoriteDrink;
+    favoriteDrink.Attach(favorites.Drink);
+
+    HString favoriteActivity;
+    favoriteActivity.Attach(favorites.Activity);
+
+    EXPECT_STREQ(favoriteDrink.GetRawBuffer(nullptr), L"Coffee");
+    EXPECT_STREQ(favoriteActivity.GetRawBuffer(nullptr), L"Coding");
+}
