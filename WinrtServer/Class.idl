@@ -1,9 +1,0 @@
-namespace WinrtServer
-{
-    [default_interface]
-    runtimeclass Programmer
-    {
-        Programmer();
-        Int32 MyProperty;
-    }
-}
