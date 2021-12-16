@@ -17,17 +17,9 @@ TEST(WinrtServerTests, RequireThat_ActivateInstance_CreatesProgrammer)
     RoInitializeWrapper initialize(RO_INIT_SINGLETHREADED);
     HR(initialize);
 
-    // Obtain the factory that can create programmers
-    ComPtr<IActivationFactory> programmerFactory;
-    HR(GetActivationFactory(HStringReference(L"WinrtServer.Programmer").Get(), &programmerFactory));
-
-    // Use the factory to create a programmer
-    ComPtr<IInspectable> programmer;
-    HR(programmerFactory->ActivateInstance(programmer.GetAddressOf()));
-
-    CComPtr<ABI::WinrtServer::IProgrammer> p;
-    HR(programmer->QueryInterface(__uuidof(ABI::WinrtServer::IProgrammer), reinterpret_cast<void**>(&p)));
+    ComPtr<ABI::WinrtServer::IProgrammer> programmer;
+    HR(ActivateInstance(HStringReference(L"WinrtServer.Programmer").Get(), programmer.GetAddressOf()));
 
     INT32 v = 0;
-    EXPECT_EQ(p->get_MyProperty(&v), E_NOTIMPL);
+    EXPECT_EQ(programmer->get_MyProperty(&v), E_NOTIMPL);
 }
