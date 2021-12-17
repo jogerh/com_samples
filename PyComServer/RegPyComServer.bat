@@ -3,7 +3,7 @@ pushd %~dp0
 
 @echo on
 
-py -3 -m venv ..\Build\buildenv || exit /b 1
+py -3.9 -m venv ..\Build\buildenv || exit /b 1
 call ..\Build\buildenv\Scripts\Activate.bat || exit /b 1
 
 python -m pip install -r requirements.txt || exit /b 1
