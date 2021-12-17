@@ -7,9 +7,12 @@
 #include <AtlServer/AtlServer_i.c>
 #include <ComUtility/Utility.h>
 #include <winrt/base.h>
+#include <wrl.h>
 #include "Mocks/IHenMock.h"
 
 using namespace testing;
+using Microsoft::WRL::ComPtr;
+using Microsoft::WRL::AgileRef;
 
 // Test that demonstrates how to create a COM object based upon its class id
 TEST(AtlHenTests, RequireThat_CoCreateInstance_CreatesAtlHen_WhenCalledWithHensClassId)
@@ -81,14 +84,16 @@ TEST(AtlHenTests, RequireThat_Cluck_IsExecutedOnMainThread_WhenCalledFromWorkerT
             return S_OK; // Feel free to put a breakpoint here, and see which thread we are called on
         }));
 
-    CComPtr<IHen> hen;
-    HR(CoCreateInstance(CLSID_AtlHen, nullptr, CLSCTX_INPROC_SERVER, IID_IHen, reinterpret_cast<void**>(&hen)));
+    ComPtr<IHen> hen;
+    HR(CoCreateInstance(CLSID_AtlHen, nullptr, CLSCTX_INPROC_SERVER, IID_IHen, &hen));
 
     // To play nice with COM, we should not pass COM interface pointers to other threads
     // unless they are 'agile'. We can do this with a simple wrapper that converts the interfaces
     // to agile interfaces. We could also marshal the interface to a stream using CoMarshalInterThreadInterfaceInStream
-    // and CoGetInterfaceAndReleaseStream.
-    const auto agileHen = AgilePtr<IHen>(hen);
+    // and CoGetInterfaceAndReleaseStream. Also use AgileRef from WRL to show how it can be used for marshaling.
+    AgileRef agileHen;
+    // AsAgile also use RoGetAgileReference.
+    HR(hen.AsAgile(&agileHen));
     const auto agileObserver = AgilePtr<IAsyncCluckObserver>(observer);
 
     std::thread thread{ [agileHen, agileObserver, mainThreadId]
@@ -96,7 +101,16 @@ TEST(AtlHenTests, RequireThat_Cluck_IsExecutedOnMainThread_WhenCalledFromWorkerT
         ComRuntime runtime{Apartment::MultiThreaded};
 
         SetThreadDescription(GetCurrentThread(), L"Worker thread"); // Help debugging
-        HR(agileHen.Get()->CluckAsync(agileObserver.Get()));
+        ComPtr<IHen> henLocal;
+        // All methods in AgileRef calls Resolve to get pointer what is safe to use in this thread.
+        HR(agileHen.As(&henLocal));
+        HR(henLocal->CluckAsync(agileObserver.Get()));
+        // Manually reset ComPtr to avoid deadlock related to destruction after
+        // PostThreadMessage(mainThreadId, WM_QUIT, 0, 0);
+        // henLocal is a proxy object created by COM runtime, and destruction
+        // of this object marshalled to the main thread, for more details see
+        // https://docs.microsoft.com/en-us/windows/win32/com/proxy
+        henLocal.Reset();
 
         // Notify main thread that it can now exit its message loop
         PostThreadMessage(mainThreadId, WM_QUIT, 0, 0);
