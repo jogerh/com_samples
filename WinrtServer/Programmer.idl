@@ -1,3 +1,5 @@
+// WinRT type listing: https://docs.microsoft.com/en-us/uwp/winrt-cref/winrt-type-system
+
 namespace WinrtServer
 {
     struct Pos3 {
