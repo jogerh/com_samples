@@ -56,3 +56,16 @@ TEST(WinrtServerTests, RequireThat_GetFavorites_ReturnsStructWithStrings)
     EXPECT_EQ(favorites.Activity, L"Coding");
     EXPECT_EQ(favorites.Drink, L"Coffee");
 }
+
+TEST(WinrtServerTests, RequireThat_Buffer_ReturnsCorrectValues)
+{
+    init_apartment(winrt::apartment_type::single_threaded);
+
+    const auto factory = winrt::get_activation_factory(L"WinrtServer.Programmer");
+    const auto programmer = factory.ActivateInstance<winrt::WinrtServer::Programmer>();
+
+    auto buffer = programmer.Buffer();
+
+    EXPECT_EQ(buffer.size(), 8u);
+    EXPECT_EQ(buffer[0], 1);
+}
