@@ -30,10 +30,12 @@ TEST(WinrtServerTests, RequireThat_ProgrammerCanAdd3dCoordinates)
 
     winrt::WinrtServer::Programmer programmer; // will trigger WinrtServer.dll loading
 
+    auto iprogrammer = programmer.as<winrt::WinrtServer::IProgrammer>(); // cast to IProgrammer interface
+
     winrt::WinrtServer::Pos3 a = { 1, 2, 3 };
     winrt::WinrtServer::Pos3 b = { 1, 2, 3 };
 
-    const auto sum = programmer.Add(a, b);
+    const auto sum = iprogrammer.Add(a, b);
 
     EXPECT_EQ(sum.x, a.x + b.x);
     EXPECT_EQ(sum.y, a.y + b.y);
