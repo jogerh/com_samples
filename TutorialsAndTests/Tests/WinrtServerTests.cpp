@@ -1,6 +1,5 @@
 #include "../pch.h"
 #include <gtest/gtest.h>
-#include <ComUtility/Utility.h>
 #include <winrt/WinrtServer.h>
 
 
