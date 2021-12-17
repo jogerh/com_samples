@@ -3,7 +3,6 @@
 #include <ComUtility/Utility.h>
 #include <winrt/WinrtServer.h>
 
-#pragma comment (lib, "runtimeobject.lib")
 
 TEST(WinrtServerTests, RequireThat_ActivateInstance_CreatesProgrammer)
 {
