@@ -129,6 +129,11 @@
   <ItemGroup>
     <Manifest Include="TutorialsAndTests.exe.manifest" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WinrtServer\WinrtServer.vcxproj">
+      <Project>{1d97f756-aeb2-4070-b845-0e9c868b4cef}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\gmock.1.11.0\build\native\gmock.targets" Condition="Exists('..\packages\gmock.1.11.0\build\native\gmock.targets')" />
