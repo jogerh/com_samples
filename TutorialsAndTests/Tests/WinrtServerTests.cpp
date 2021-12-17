@@ -15,8 +15,7 @@ TEST(WinrtServerTests, RequireThat_GivingProgrammerCoffee_IncreasesMotviation)
 {
     init_apartment(winrt::apartment_type::single_threaded);
 
-    const auto factory = winrt::get_activation_factory(L"WinrtServer.Programmer");
-    const auto programmer = factory.ActivateInstance<winrt::WinrtServer::Programmer>();
+    winrt::WinrtServer::Programmer programmer; // will trigger WinrtServer.dll loading
 
     const int motivationBeforeCoffee = programmer.Motivation();
 
@@ -29,8 +28,7 @@ TEST(WinrtServerTests, RequireThat_ProgrammerCanAdd3dCoordinates)
 {
     init_apartment(winrt::apartment_type::single_threaded);
 
-    const auto factory = winrt::get_activation_factory(L"WinrtServer.Programmer");
-    const auto programmer = factory.ActivateInstance<winrt::WinrtServer::Programmer>();
+    winrt::WinrtServer::Programmer programmer; // will trigger WinrtServer.dll loading
 
     winrt::WinrtServer::Pos3 a = { 1, 2, 3 };
     winrt::WinrtServer::Pos3 b = { 1, 2, 3 };
@@ -46,8 +44,7 @@ TEST(WinrtServerTests, RequireThat_GetFavorites_ReturnsStructWithStrings)
 {
     init_apartment(winrt::apartment_type::single_threaded);
 
-    const auto factory = winrt::get_activation_factory(L"WinrtServer.Programmer");
-    const auto programmer = factory.ActivateInstance<winrt::WinrtServer::Programmer>();
+    winrt::WinrtServer::Programmer programmer; // will trigger WinrtServer.dll loading
 
     auto favorites = programmer.GetFavorites();
 
@@ -59,8 +56,7 @@ TEST(WinrtServerTests, RequireThat_Buffer_ReturnsCorrectValues)
 {
     init_apartment(winrt::apartment_type::single_threaded);
 
-    const auto factory = winrt::get_activation_factory(L"WinrtServer.Programmer");
-    const auto programmer = factory.ActivateInstance<winrt::WinrtServer::Programmer>();
+    winrt::WinrtServer::Programmer programmer; // will trigger WinrtServer.dll loading
 
     auto buffer = programmer.Buffer();
 
