@@ -25,6 +25,8 @@
     </ClCompile>
     <ClCompile Include="Tests\WinrtServerTests.cpp">
       <Filter>Tests</Filter>
+    <ClCompile Include="Tests\PyComServerTests.cpp">
+      <Filter>Tests</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

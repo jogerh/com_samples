@@ -2,4 +2,7 @@
 Build/
 packages/
 */Generated Files/
+*/env/
+
+*.tlb
 *.user

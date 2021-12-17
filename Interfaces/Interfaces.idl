@@ -1,5 +1,6 @@
 import "oaidl.idl";
 import "ocidl.idl";
+import "IRoyalPython.idl";
 import "IHen.idl";
 import "IDog.idl";
 import "IPostman.idl";
@@ -11,6 +12,7 @@ import "IPetShop.idl";
 ]
 library Interfaces
 {
+	interface IRoyalPython;
 	interface IHen;
 	interface IAsyncCluckObserver;
 	interface IDog;

@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <Midl Include="IRoyalPython.idl" />
     <Midl Include="IHen.idl" />
     <Midl Include="Interfaces.idl" />
     <Midl Include="IDog.idl" />
