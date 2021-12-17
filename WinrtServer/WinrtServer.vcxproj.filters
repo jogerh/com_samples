@@ -22,7 +22,6 @@
   <ItemGroup>
     <None Include="WinrtServer.def" />
     <None Include="packages.config" />
-    <None Include="CreateCppInterop.bat" />
     <None Include="readme.md" />
   </ItemGroup>
   <ItemGroup>
