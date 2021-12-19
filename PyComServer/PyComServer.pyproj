@@ -29,6 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="readme.md" />
+    <Content Include="RegPyComServer.ps1" />
     <Content Include="RoyalPython.idl" />
     <Content Include="requirements.txt" />
   </ItemGroup>
