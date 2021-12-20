@@ -2,7 +2,10 @@
 Build/
 packages/
 */Generated Files/
+*/buildenv/
 */env/
+*/__pycache__/
+TestResults/
 
 *.tlb
 *.user

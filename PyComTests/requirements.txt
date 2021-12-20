@@ -1,0 +1,3 @@
+pywin32
+comtypes==1.1.7
+pytest
