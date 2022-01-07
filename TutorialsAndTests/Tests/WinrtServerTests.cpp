@@ -65,3 +65,18 @@ TEST(WinrtServerTests, RequireThat_Buffer_ReturnsCorrectValues)
     EXPECT_EQ(buffer.size(), 8u);
     EXPECT_EQ(buffer[0], 1);
 }
+
+TEST(WinrtServerTests, RequireThat_Buffer_CanBeSetAndFilled)
+{
+    init_apartment(winrt::apartment_type::single_threaded);
+
+    winrt::WinrtServer::Programmer programmer; // will trigger WinrtServer.dll loading
+
+    std::vector<uint8_t> content = { 8, 7, 6, 5, 4, 3, 2, 1 };
+    programmer.SetBuffer(content);
+
+    std::vector<uint8_t> copy(8, 0);
+    programmer.FillBuffer(copy);
+
+    EXPECT_EQ(content, copy);
+}
