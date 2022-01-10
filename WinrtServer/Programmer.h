@@ -19,6 +19,8 @@ namespace winrt::WinrtServer::implementation
 
         void FillBuffer(array_view<uint8_t> buffer);
 
+        void GetBuffer(com_array<uint8_t>& buffer);
+
     private:
         int m_motivation = 0;
         std::vector<uint8_t> m_buffer;

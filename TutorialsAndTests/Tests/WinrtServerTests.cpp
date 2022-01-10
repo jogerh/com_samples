@@ -77,6 +77,9 @@ TEST(WinrtServerTests, RequireThat_Buffer_CanBeSetAndFilled)
 
     std::vector<uint8_t> copy(8, 0);
     programmer.FillBuffer(copy);
-
     EXPECT_EQ(content, copy);
+
+    winrt::com_array<uint8_t> copy2;
+    programmer.GetBuffer(copy2);
+    EXPECT_EQ(winrt::array_view<uint8_t>(content), winrt::array_view<uint8_t>(copy2));
 }

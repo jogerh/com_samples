@@ -57,4 +57,9 @@ namespace winrt::WinrtServer::implementation
         for (unsigned int i = 0; (i < buffer.size()) && (i < m_buffer.size()); ++i)
             buffer[i] = m_buffer[i];
     }
+
+    void Programmer::GetBuffer(com_array<uint8_t>& buffer) {
+        // return a copy
+        buffer = com_array<uint8_t>{ m_buffer.begin(), m_buffer.end() };
+    }
 }
