@@ -29,6 +29,9 @@ namespace WinrtServer
 
         // fill caller-provided buffer with values (no copying of argument)
         void FillBuffer(ref UInt8[] buffer);
+
+        // get callee-allocated buffer (similar to Buffer getter)
+        void GetBuffer(out UInt8[] buffer);
     }
 
     runtimeclass Programmer : [default] IProgrammer
