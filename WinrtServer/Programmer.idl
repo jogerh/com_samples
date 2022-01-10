@@ -23,6 +23,12 @@ namespace WinrtServer
         Pos3 Add(Pos3 a, Pos3 b);
 
         UInt8[] Buffer{ get; };
+
+        // set read-only buffer (no copying of argument)
+        void SetBuffer(ref const UInt8[] buffer);
+
+        // fill caller-provided buffer with values (no copying of argument)
+        void FillBuffer(ref UInt8[] buffer);
     }
 
     runtimeclass Programmer : [default] IProgrammer

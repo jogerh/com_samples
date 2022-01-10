@@ -15,6 +15,10 @@ namespace winrt::WinrtServer::implementation
         Favorites GetFavorites();
         com_array<uint8_t> Buffer();
 
+        void SetBuffer(const array_view<uint8_t> buffer);
+
+        void FillBuffer(array_view<uint8_t> buffer);
+
     private:
         int m_motivation = 0;
         std::vector<uint8_t> m_buffer;

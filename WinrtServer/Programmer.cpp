@@ -45,4 +45,16 @@ namespace winrt::WinrtServer::implementation
         // return a copy
         return com_array<uint8_t>{ m_buffer.begin(), m_buffer.end() };
     }
+
+    void Programmer::SetBuffer(const array_view<uint8_t> buffer) {
+        m_buffer.resize(buffer.size());
+
+        for (unsigned int i = 0; i < buffer.size(); ++i)
+            m_buffer[i] = buffer[i];
+    }
+
+    void Programmer::FillBuffer(array_view<uint8_t> buffer) {
+        for (unsigned int i = 0; (i < buffer.size()) && (i < m_buffer.size()); ++i)
+            buffer[i] = m_buffer[i];
+    }
 }
