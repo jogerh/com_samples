@@ -1,0 +1,14 @@
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	oleautomation,
+	object,
+	uuid(2E2944D8-CD27-45ED-ADAB-9644C87CE6B8),
+	pointer_default(unique)
+]
+interface IListener : IUnknown
+{
+	HRESULT Start([in] IUnknown* toListen);
+	HRESULT Stop();
+};

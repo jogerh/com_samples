@@ -7,6 +7,7 @@
     <Midl Include="IPostman.idl" />
     <Midl Include="IPetShop.idl" />
     <Midl Include="IRoyalPython.idl" />
+    <Midl Include="IListener.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="readme.md" />

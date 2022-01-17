@@ -5,6 +5,7 @@ import "IHen.idl";
 import "IDog.idl";
 import "IPostman.idl";
 import "IPetShop.idl";
+import "IListener.idl";
 
 [
 	uuid(8edbf75d-ecf2-4a1f-affc-07fcb8dee00a),
@@ -18,5 +19,7 @@ library Interfaces
 	interface IDog;
 	interface IPostman;
 	interface IPetShop;
+	interface IListener;
+	dispinterface _DPetShopEvents;
 };
 

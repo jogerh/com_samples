@@ -19,4 +19,16 @@ interface IPetShop : IUnknown
 {
 	HRESULT BuyDog([out, retval] IDog** dog);
 	HRESULT GetAddress([out, retval] Address* address);
+	HRESULT Open();
+};
+
+[
+	uuid(A8545F26-9028-46DB-9D89-A7B395B3260F)
+]
+dispinterface _DPetShopEvents
+{
+	properties:
+	methods:
+	[id(1)]
+	void Opened();
 };
