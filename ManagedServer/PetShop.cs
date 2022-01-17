@@ -6,9 +6,14 @@ namespace ManagedServer
 {
     [Guid("5011c315-994d-49b4-b737-03a846f590a0")]
     [ProgId("ManagedServer.PetShop.1")]
+    [ComSourceInterfaces(typeof(_DPetShopEvents))]
     [ComVisible(true)]
     public class PetShop : IPetShop
     {
+        public delegate void Opened_Delegate();
+
+        private event Opened_Delegate Opened;
+
         public PetShop()
         {
 
@@ -26,6 +31,11 @@ namespace ManagedServer
             address.PostalCode = "0363";
             address.City = "Oslo";
             return address;
+        }
+
+        public void Open()
+        {
+            Opened?.Invoke();
         }
     }
 }

@@ -18,5 +18,6 @@ library Interfaces
 	interface IDog;
 	interface IPostman;
 	interface IPetShop;
+	dispinterface _DPetShopEvents;
 };
 
