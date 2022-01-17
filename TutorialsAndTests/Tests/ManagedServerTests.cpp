@@ -1,9 +1,13 @@
 #include "../pch.h"
 #include <gtest/gtest.h>
+#include <Interfaces/IListener.h>
 #include <Interfaces/IDog.h>
 #include <Interfaces/IPetShop.h>
 #include <ComUtility/Utility.h>
 #include <wrl.h>
+#include <atlbase.h>
+#include <atlcom.h>
+#include <atlcomcli.h>
 
 using Microsoft::WRL::ComPtr;
 
@@ -58,3 +62,35 @@ TEST(ManagedServerTests,
     SysFreeString(address.PostalCode);
     SysFreeString(address.City);
 }
+
+// Base class to listen events from COM event source
+template<unsigned Id, typename Class, typename Events>
+struct ListenerImpl :
+    IDispEventSimpleImpl<Id, Class, &__uuidof(Events)>,
+    IListener
+{
+    // Connect to toListen event source
+    HRESULT Start(IUnknown* toListen) override
+    {
+        m_toListen = toListen;
+        // Setup the connection with the event source
+        DispEventAdvise(m_toListen);
+
+        return S_OK;
+    }
+
+    // Disconnect from event source
+    HRESULT Stop() override
+    {
+        // Break the connection with the event source
+        DispEventUnadvise(m_toListen);
+
+        // Release the application
+        m_toListen.Release();
+
+        return S_OK;
+    }
+
+protected:
+    CComPtr<IUnknown> m_toListen;
+};
