@@ -1,5 +1,6 @@
 #include "../pch.h"
 #include <gtest/gtest.h>
+#include <Interfaces/Interfaces.h>
 #include <Interfaces/IListener.h>
 #include <Interfaces/IDog.h>
 #include <Interfaces/IPetShop.h>
@@ -94,3 +95,67 @@ struct ListenerImpl :
 protected:
     CComPtr<IUnknown> m_toListen;
 };
+
+// Interface to add call expectations
+struct IEventsHandler
+{
+    virtual ~IEventsHandler() = default;
+    virtual void OnOpenedImpl() const = 0;
+};
+
+_ATL_FUNC_INFO OnOpenedInfo = { CC_STDCALL, VT_EMPTY, 0 };
+
+// Real PetShopListener, inspired from :
+// https://github.com/microsoft/VCSamples/blob/9e1d4475555b76a17a3568369867f1d7b6cc6126/VC2008Samples/ATL/General/ATLEventHandling/Simple.h
+struct PetShopListener :
+    CComObjectRootEx<CComMultiThreadModel>,
+    CComCoClass<PetShopListener>,
+    ListenerImpl<1, PetShopListener, _DPetShopEvents>,
+    IEventsHandler
+{
+    BEGIN_COM_MAP(PetShopListener)
+        COM_INTERFACE_ENTRY(IListener)
+    END_COM_MAP()
+
+    void __stdcall OnOpened()
+    {
+        OnOpenedImpl();
+    }
+
+    MOCK_METHOD(void, OnOpenedImpl, (), (const override));
+
+    BEGIN_SINK_MAP(PetShopListener)
+        SINK_ENTRY_INFO(/*nID =*/ 1, __uuidof(_DPetShopEvents), /*dispid =*/ 1, OnOpened, &OnOpenedInfo)
+    END_SINK_MAP()
+};
+
+TEST(ManagedServerTests,
+    RequireThat_Open_TriggersOpenedEvent_WhenCalled)
+{
+    CLSID petShopClsid{};
+    HR(CLSIDFromString(L"{5011c315-994d-49b4-b737-03a846f590a0}", &petShopClsid));
+
+    // Create managed PetShop what can Raise events
+    ATL::CComPtr<IPetShop> petShop;
+    HR(CoCreateInstance(petShopClsid, nullptr, CLSCTX_INPROC_SERVER, __uuidof(IPetShop), reinterpret_cast<void**>(&petShop)));
+    EXPECT_NE(petShop, nullptr);
+
+    // Create local instance for PetShopListener
+    auto petShopListener = make_self<PetShopListener>();
+
+    // Subscribe to the petShop events
+    petShopListener->Start(petShop);
+
+    // We expect that OnOpenedImpl called while we subscribed
+    EXPECT_CALL(*petShopListener, OnOpenedImpl())
+        .Times(1);
+
+    // Raise Opened event, this should call PetShopListener::OnOpened
+    petShop->Open();
+
+    // Unsubscribe from the petShop events
+    petShopListener->Stop();
+
+    // Raise Opened event, but no Listeners and PetShopListener::OnOpened is not called
+    petShop->Open();
+}
