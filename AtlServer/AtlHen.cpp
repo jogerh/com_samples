@@ -2,6 +2,9 @@
 #include "AtlHen.h"
 #include <comdef.h>
 #include <cassert>
+#include <future>
+#include <ComUtility/Utility.h>
+#include <winrt/base.h>
 
 HRESULT AtlHen::Cluck()
 {
@@ -28,7 +31,16 @@ HRESULT FreeThreadedHen::Cluck()
 
 HRESULT FreeThreadedHen::CluckAsync(IAsyncCluckObserver* cluckObserver)
 {
-    return cluckObserver->OnCluck();
+    winrt::com_ptr<IAsyncCluckObserver> observer;
+    observer.copy_from(cluckObserver);
+
+    auto result = std::async(std::launch::async, [observer]
+    {
+        ComRuntime comRuntime{ Apartment::MultiThreaded };
+        return observer->OnCluck();
+    });
+
+    return result.get();
 }
 
 HRESULT AtlCluckObserver::OnCluck()

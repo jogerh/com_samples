@@ -153,7 +153,7 @@ TEST(AtlHenTests, ObserveThat_CluckAsync_Fails_WhenCalledFromWorkerThread)
 // Test that demonstrates use of the free threaded marshaler which allows calling an object from any thread.
 TEST(FreeThreadedHenTests, RequireThat_Cluck_IsCalledOnAsyncCluckObserver_WhenCalledFromWorkerThread)
 {
-    auto observer = make_self<IAsyncCluckObserverMock>();
+    auto observer = winrt::make_self<FreeThreadedCluckObserver>();
     EXPECT_CALL(*observer, OnCluck()).WillOnce(Invoke([] {
         return S_OK;
     }));
@@ -166,7 +166,7 @@ TEST(FreeThreadedHenTests, RequireThat_Cluck_IsCalledOnAsyncCluckObserver_WhenCa
 
     auto result = std::async(std::launch::async, [&] {
         ComRuntime comRuntime{Apartment::MultiThreaded};
-        return hen->CluckAsync(observer);
+        return hen->CluckAsync(observer.get());
     });
 
     EXPECT_EQ(result.get(), S_OK);
