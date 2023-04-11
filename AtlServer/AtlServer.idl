@@ -16,6 +16,15 @@ library AtlServer
 	};
 
 	[
+		uuid(9c82a243-db92-4443-8513-fe1f0e46765d),
+	]
+	coclass FreeThreadedHen
+	{
+		[default] interface IHen;
+	};
+
+
+	[
 		uuid(5717f50c-8aaa-433b-9077-85edc0a5efc3),
 	]
 	coclass AtlCluckObserver

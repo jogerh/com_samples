@@ -8,7 +8,9 @@
 #include <ComUtility/Utility.h>
 #include <winrt/base.h>
 #include <wrl.h>
+#include <future>
 #include "Mocks/IHenMock.h"
+#include "ComUtility/Utility.h"
 
 using namespace testing;
 using Microsoft::WRL::ComPtr;
@@ -126,4 +128,46 @@ TEST(AtlHenTests, RequireThat_Cluck_IsExecutedOnMainThread_WhenCalledFromWorkerT
     }
 
     thread.join();
+}
+
+// Test that demonstrates what happens when calling an apartment threaded object from a worker thread
+TEST(AtlHenTests, ObserveThat_CluckAsync_Fails_WhenCalledFromWorkerThread)
+{
+    auto observer = make_self<IAsyncCluckObserverMock>();
+    EXPECT_CALL(*observer, OnCluck()).Times(Exactly(0));
+
+    // Create the hen on a separate process running through dllhost. You can find the dllhost instance
+    // in task manager by looking for the 860d9d2c-315d-4e01-93b6-ded0e8d133c3 in the command line
+    // This is the AppId registered in the AtlHenModule.cpp
+    CComPtr<IHen> hen;
+    HR(CoCreateInstance(CLSID_AtlHen, nullptr, CLSCTX_LOCAL_SERVER, IID_IHen, reinterpret_cast<void**>(&hen)));
+
+    auto result = std::async(std::launch::async, [&] {
+        ComRuntime comRuntime{ Apartment::MultiThreaded };
+        return hen->CluckAsync(observer);
+    });
+
+    EXPECT_EQ(result.get(), RPC_E_WRONG_THREAD);
+}
+
+// Test that demonstrates use of the free threaded marshaler which allows calling an object from any thread.
+TEST(FreeThreadedHenTests, RequireThat_Cluck_IsCalledOnAsyncCluckObserver_WhenCalledFromWorkerThread)
+{
+    auto observer = make_self<IAsyncCluckObserverMock>();
+    EXPECT_CALL(*observer, OnCluck()).WillOnce(Invoke([] {
+        return S_OK;
+    }));
+
+    // Create the hen on a separate process running through dllhost. You can find the dllhost instance
+    // in task manager by looking for the 860d9d2c-315d-4e01-93b6-ded0e8d133c3 in the command line
+    // This is the AppId registered in the AtlHenModule.cpp
+    CComPtr<IHen> hen;
+    HR(CoCreateInstance(CLSID_FreeThreadedHen, nullptr, CLSCTX_LOCAL_SERVER, IID_IHen, reinterpret_cast<void**>(&hen)));
+
+    auto result = std::async(std::launch::async, [&] {
+        ComRuntime comRuntime{Apartment::MultiThreaded};
+        return hen->CluckAsync(observer);
+    });
+
+    EXPECT_EQ(result.get(), S_OK);
 }

@@ -25,4 +25,30 @@ HKCR
 			val AppID = s '%APPID%'
 		}
 	}
+
+	AtlServer.FreeThreadedHen.1 = s 'Free threaded Hen implementation object'
+    {
+        CLSID = s '{9c82a243-db92-4443-8513-fe1f0e46765d}'
+    }
+    AtlServer.FreeThreadedHen = s 'Free threaded Hen implementation object'
+    {
+        CLSID = s '{9c82a243-db92-4443-8513-fe1f0e46765d}'
+        CurVer = s 'AtlServer.FreeThreadedHen.1'
+    }
+
+	NoRemove CLSID
+	{
+		ForceRemove {9c82a243-db92-4443-8513-fe1f0e46765d} = s 'FreeThreadedHen class'
+		{
+			ProgID = s 'AtlServer.FreeThreadedHen.1'
+            VersionIndependentProgID = s 'AtlServer.FreeThreadedHen'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+		    TypeLib = s '{6ed1b1aa-807b-4a28-87b6-fcdc18ab8dc3}'
+			Version = s '1.0'
+			val AppID = s '%APPID%'
+		}
+	}
 }
