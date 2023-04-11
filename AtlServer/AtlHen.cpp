@@ -34,8 +34,7 @@ HRESULT FreeThreadedHen::CluckAsync(IAsyncCluckObserver* cluckObserver)
     winrt::com_ptr<IAsyncCluckObserver> observer;
     observer.copy_from(cluckObserver);
 
-    auto result = std::async(std::launch::async, [observer]
-    {
+    auto result = std::async(std::launch::async, [observer] {
         ComRuntime comRuntime{ Apartment::MultiThreaded };
         return observer->OnCluck();
     });

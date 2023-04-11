@@ -80,11 +80,10 @@ TEST(AtlHenTests, RequireThat_Cluck_IsExecutedOnMainThread_WhenCalledFromWorkerT
     // After all, it was created on a single threaded apartment (STA), and it should not be
     // allowed to call it from any other thread.
     auto observer = make_self<IAsyncCluckObserverMock>();
-    EXPECT_CALL(*observer, OnCluck()).WillOnce(Invoke([mainThreadId]
-        {
-            EXPECT_EQ(GetCurrentThreadId(), mainThreadId);
-            return S_OK; // Feel free to put a breakpoint here, and see which thread we are called on
-        }));
+    EXPECT_CALL(*observer, OnCluck()).WillOnce(Invoke([mainThreadId] {
+        EXPECT_EQ(GetCurrentThreadId(), mainThreadId);
+        return S_OK; // Feel free to put a breakpoint here, and see which thread we are called on
+    }));
 
     ComPtr<IHen> hen;
     HR(CoCreateInstance(CLSID_AtlHen, nullptr, CLSCTX_INPROC_SERVER, IID_IHen, &hen));
