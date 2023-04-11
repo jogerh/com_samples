@@ -34,8 +34,7 @@ public:
         ComCallData data;
         data.pUserDefined = &callable;
         return m_context->ContextCallback(
-            [](ComCallData* data)
-            {
+            [](ComCallData* data) {
                 auto& callable = *static_cast<Callable*>(data->pUserDefined);
                 return callable();
             }, &data, IID_ICallbackWithNoReentrancyToApplicationSTA, 5, nullptr);
@@ -49,8 +48,7 @@ public:
     * all have been released. */
     HRESULT Disconnect()
     {
-        return Invoke([]
-        {
+        return Invoke([] {
             return CoDisconnectContext(INFINITE);
         });
     }
@@ -83,8 +81,7 @@ ComApartment::ComApartment()
       , m_apartmentInitialized{CreateNonSignaledManualResetEvent()}
       , m_apartmentIsClosed{CreateNonSignaledManualResetEvent()}
 {
-    m_thread = std::thread([this]
-    {
+    m_thread = std::thread([this] {
         SetThreadDescription(GetCurrentThread(), L"ComApartment"); // Debugging help
         RunMessagePump();
     });
@@ -95,8 +92,7 @@ ComApartment::ComApartment()
 
     // Initialize COM and the apartment context on the apartment
     // thread and throw if it fails.
-    HR(InvokeOnApartment([this]
-    {
+    HR(InvokeOnApartment([this] {
         const auto result = CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
         m_context = std::make_unique<ApartmentContext>();
         return result;
@@ -142,8 +138,7 @@ std::future<HRESULT> ComApartment::InvokeOnApartment(std::function<HRESULT()> ca
 
 ComApartment::~ComApartment()
 {
-    const auto result = InvokeOnApartment([this]
-    {
+    const auto result = InvokeOnApartment([this] {
         // We are shutting down the apartment, but to make sure CoUninitialize
         // can complete, we need to disconnect any remaining proxies to ensure
         // that we do not end up waiting on callbacks to client.

@@ -22,8 +22,7 @@ TEST(AtlFreServerTests, RequireThat_CoCreateInstance_CreatesGuardDog_WhenCalledW
 TEST(AtlFreServerTests, RequireThat_Bite_CausesDogToBitePostman)
 {
     const auto postman = wrl::Make<IPostmanMock>();
-    EXPECT_CALL(*postman.Get(), OnBitten()).WillOnce(Invoke([]()
-    {
+    EXPECT_CALL(*postman.Get(), OnBitten()).WillOnce(Invoke([] {
         return S_OK;
     }));
 
