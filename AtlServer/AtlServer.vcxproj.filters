@@ -4,6 +4,7 @@
     <ClCompile Include="AtlHen.cpp" />
     <ClCompile Include="AtlServer.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="FreeThreadedHen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AtlHen.h" />
@@ -11,6 +12,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="FreeThreadedHen.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AtlServer.rc" />
